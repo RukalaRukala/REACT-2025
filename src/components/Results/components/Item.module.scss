@@ -1,0 +1,73 @@
+@use '../../../styles/functions.scss' as *;
+@use '../../../styles/colors.scss' as *;
+
+.item {
+  background: $card-bg;
+  border: toRem(1) solid $card-border;
+  border-radius: toRem(12);
+  padding: toRem(20);
+  margin-bottom: toRem(16);
+  box-shadow: 0 toRem(2) toRem(4) $card-shadow;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.item:hover {
+  box-shadow: 0 toRem(8) toRem(25) $card-shadow-hover;
+  transform: translateY(toRem(-2));
+  border-color: $blue-primary;
+}
+
+.item:last-child {
+  margin-bottom: 0;
+}
+
+.status {
+  font-size: toRem(18);
+  font-weight: 600;
+  margin: 0 0 toRem(12) 0;
+  padding: toRem(6) toRem(12);
+  border-radius: toRem(20);
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: toRem(0.5);
+}
+
+.status.available {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: $status-available;
+  border: toRem(1) solid rgba(16, 185, 129, 0.2);
+}
+
+.status.pending {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: $status-pending;
+  border: toRem(1) solid rgba(245, 158, 11, 0.2);
+}
+
+.status.sold {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: $status-sold;
+  border: toRem(1) solid rgba(239, 68, 68, 0.2);
+}
+
+.field {
+  margin-bottom: toRem(8);
+  font-size: toRem(14);
+  line-height: 1.5;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.field-label {
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.field-value {
+  color: $text-secondary;
+  margin-left: toRem(4);
+}
