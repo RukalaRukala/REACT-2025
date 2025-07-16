@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import SearchField from './components/SearchField.tsx';
 import SearchButton from './components/SearchButton.tsx';
-import {
-  loadSearchQuery,
-  performSearch,
-  useDebounceStorage,
-} from './Search.utils.tsx';
+import StatusHint from './components/StatusHint.tsx';
+import { loadSearchQuery, useDebounceStorage } from './Search.utils.tsx';
 import styles from './Search.module.scss';
 import { EMPTY_STRING } from './Search.const.tsx';
 
-function Search() {
+interface SearchProps {
+  onSearch: (query: string) => void;
+}
+
+function Search({ onSearch }: SearchProps) {
   const [searchQuery, setSearchQuery] = useState<string>(EMPTY_STRING);
 
   useEffect(() => {
@@ -24,13 +25,14 @@ function Search() {
   };
 
   const handleSearch = () => {
-    performSearch(searchQuery);
+    onSearch(searchQuery);
   };
 
   return (
     <div className={styles.searchContainer}>
       <SearchField value={searchQuery} onChange={handleSearchChange} />
       <SearchButton onSearch={handleSearch} />
+      <StatusHint />
     </div>
   );
 }

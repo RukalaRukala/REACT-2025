@@ -13,21 +13,15 @@ export const clearSearchQuery = (): void => {
   localStorage.removeItem(STORAGE_KEY);
 };
 
-export const performSearch = (query: string): void => {
-  console.log('Search:', query);
-};
-
 export const useDebounceStorage = (value: string, delay: number = 500) => {
   useEffect(() => {
     if (value === EMPTY_STRING) return;
 
     const timeoutId = setTimeout(() => {
-      console.log('Save:', value);
       saveSearchQuery(value);
     }, delay);
 
     return () => {
-      console.log('Clear timer:', value);
       clearTimeout(timeoutId);
     };
   }, [value, delay]);
