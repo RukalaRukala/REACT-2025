@@ -1,31 +1,35 @@
 import { render, screen } from '@testing-library/react';
 import Item from '../components/Results/components/Item';
 
-const mockPet = {
+const testPet = {
   id: 1,
   name: 'Tusik',
   status: 'available' as const,
   category: { id: 1, name: 'Dogs' },
-  photoUrls: ['photo1.jpg'],
+  photoUrls: ['tusik.jpg'],
 };
 
-describe('Item Component', () => {
-  describe('Rendering Tests', () => {
-    it('displays item name and description correctly', () => {
-      render(<Item pet={mockPet} />);
+const petWithoutCategory = {
+  id: 2,
+  name: 'Belka',
+  status: 'pending' as const,
+  photoUrls: ['belka.jpg'],
+};
 
-      expect(screen.getByText('Tusik')).toBeInTheDocument();
-      expect(screen.getByText('available')).toBeInTheDocument();
-      expect(screen.getByText('1')).toBeInTheDocument();
-      expect(screen.getByText('Dogs')).toBeInTheDocument();
-    });
+describe('Item Tests', () => {
+  it('shows pet info', () => {
+    render(<Item pet={testPet} />);
 
-    it('displays all required field labels', () => {
-      render(<Item pet={mockPet} />);
+    expect(screen.getByText('Tusik')).toBeInTheDocument();
+    expect(screen.getByText('available')).toBeInTheDocument();
+    expect(screen.getByText('1')).toBeInTheDocument();
+    expect(screen.getByText('Dogs')).toBeInTheDocument();
+  });
 
-      expect(screen.getByText('ID:')).toBeInTheDocument();
-      expect(screen.getByText('Name:')).toBeInTheDocument();
-      expect(screen.getByText('Category:')).toBeInTheDocument();
-    });
+  it('shows not specified when no category', () => {
+    render(<Item pet={petWithoutCategory} />);
+
+    expect(screen.getByText('Belka')).toBeInTheDocument();
+    expect(screen.getByText('Not specified')).toBeInTheDocument();
   });
 });

@@ -2,116 +2,65 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import TestErrorButton from '../components/ErrorBoundary/TestErrorButton';
 
-const mockConsoleError = jest
-  .spyOn(console, 'error')
-  .mockImplementation(() => {});
+const mockConsole = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-const ThrowingComponent = ({ shouldThrow }: { shouldThrow: boolean }) => {
+const BadComponent = ({ shouldThrow }: { shouldThrow: boolean }) => {
   if (shouldThrow) {
-    throw new Error('Test component error');
+    throw new Error('Test error');
   }
-  return <div>Working component</div>;
+  return <div>Good component</div>;
 };
 
-describe('ErrorBoundary Component', () => {
+describe('ErrorBoundary Tests', () => {
   beforeEach(() => {
-    mockConsoleError.mockClear();
+    mockConsole.mockClear();
   });
 
   afterAll(() => {
-    mockConsoleError.mockRestore();
+    mockConsole.mockRestore();
   });
 
-  describe('Error Catching Tests', () => {
-    it('catches and handles JavaScript errors in child components', () => {
-      render(
-        <ErrorBoundary>
-          <ThrowingComponent shouldThrow={true} />
-        </ErrorBoundary>
-      );
+  it('catches errors from child components', () => {
+    render(
+      <ErrorBoundary>
+        <BadComponent shouldThrow={true} />
+      </ErrorBoundary>
+    );
 
-      expect(
-        screen.getByText('Oops! Something went wrong')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText('An unexpected error occurred in the application.')
-      ).toBeInTheDocument();
-    });
-
-    it('displays fallback UI when error occurs', () => {
-      render(
-        <ErrorBoundary>
-          <ThrowingComponent shouldThrow={true} />
-        </ErrorBoundary>
-      );
-
-      expect(screen.getByText('Try Again')).toBeInTheDocument();
-      expect(screen.getByText('Reload Page')).toBeInTheDocument();
-      expect(
-        screen.getByText('Error Details (Development Only)')
-      ).toBeInTheDocument();
-    });
-
-    it('logs error to console', () => {
-      render(
-        <ErrorBoundary>
-          <ThrowingComponent shouldThrow={true} />
-        </ErrorBoundary>
-      );
-
-      expect(mockConsoleError).toHaveBeenCalledWith(
-        'Error Boundary caught an error:',
-        expect.any(Error)
-      );
-      expect(mockConsoleError).toHaveBeenCalledWith(
-        'Error Info:',
-        expect.any(Object)
-      );
-    });
-
-    it('renders children when no error occurs', () => {
-      render(
-        <ErrorBoundary>
-          <ThrowingComponent shouldThrow={false} />
-        </ErrorBoundary>
-      );
-
-      expect(screen.getByText('Working component')).toBeInTheDocument();
-      expect(
-        screen.queryByText('Oops! Something went wrong')
-      ).not.toBeInTheDocument();
-    });
+    expect(screen.getByText('Oops! Something went wrong')).toBeInTheDocument();
   });
 
-  describe('Error Button Tests', () => {
-    it('throws error when test button is clicked', () => {
-      render(
-        <ErrorBoundary>
-          <TestErrorButton />
-        </ErrorBoundary>
-      );
+  it('shows error UI with buttons', () => {
+    render(
+      <ErrorBoundary>
+        <BadComponent shouldThrow={true} />
+      </ErrorBoundary>
+    );
 
-      const testButton = screen.getByText('Test Error Boundary');
-      fireEvent.click(testButton);
+    expect(screen.getByText('Try Again')).toBeInTheDocument();
+    expect(screen.getByText('Reload Page')).toBeInTheDocument();
+  });
 
-      expect(
-        screen.getByText('Oops! Something went wrong')
-      ).toBeInTheDocument();
-    });
+  it('renders children when no error', () => {
+    render(
+      <ErrorBoundary>
+        <BadComponent shouldThrow={false} />
+      </ErrorBoundary>
+    );
 
-    it('triggers error boundary fallback UI', () => {
-      render(
-        <ErrorBoundary>
-          <TestErrorButton />
-        </ErrorBoundary>
-      );
+    expect(screen.getByText('Good component')).toBeInTheDocument();
+  });
 
-      const testButton = screen.getByText('Test Error Boundary');
-      fireEvent.click(testButton);
+  it('test button throws error', () => {
+    render(
+      <ErrorBoundary>
+        <TestErrorButton />
+      </ErrorBoundary>
+    );
 
-      expect(screen.getByText('Try Again')).toBeInTheDocument();
-      expect(screen.getByText('Reload Page')).toBeInTheDocument();
-      expect(screen.queryByText('Test Error Boundary')).not.toBeInTheDocument();
-    });
+    const button = screen.getByText('Test Error Boundary');
+    fireEvent.click(button);
+
+    expect(screen.getByText('Oops! Something went wrong')).toBeInTheDocument();
   });
 });

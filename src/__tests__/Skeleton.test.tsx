@@ -1,35 +1,29 @@
 import { render } from '@testing-library/react';
 import Skeleton from '../components/Skeleton/Skeleton';
 
-describe('Skeleton Loading Component', () => {
-  describe('Rendering Tests', () => {
-    it('renders loading indicator (skeleton)', () => {
-      render(<Skeleton />);
+describe('Skeleton Tests', () => {
+  it('renders skeleton element', () => {
+    render(<Skeleton />);
 
-      const skeletonElement = document.querySelector('.skeleton');
-      expect(skeletonElement).toBeInTheDocument();
-      expect(skeletonElement).toHaveClass('skeleton');
-    });
+    const skeletonElement = document.querySelector('.skeleton');
+    expect(skeletonElement).toBeInTheDocument();
+  });
 
-    it('shows skeleton with default props when no props provided', () => {
-      render(<Skeleton />);
+  it('uses default styles', () => {
+    render(<Skeleton />);
 
-      const skeletonElement = document.querySelector('.skeleton');
-      expect(skeletonElement).toHaveStyle({
-        height: '1.25rem',
-        width: '100%',
-        borderRadius: '0.25rem',
-      });
+    const skeletonElement = document.querySelector('.skeleton');
+    expect(skeletonElement).toHaveStyle({
+      height: '1.25rem',
+      width: '100%',
+      borderRadius: '0.25rem',
     });
   });
 
-  describe('Accessibility Tests', () => {
-    it('has appropriate structure for screen readers', () => {
-      render(<Skeleton className="loading-content" />);
+  it('applies custom class', () => {
+    render(<Skeleton className="my-skeleton" />);
 
-      const skeletonElement = document.querySelector('.skeleton');
-      expect(skeletonElement).toHaveClass('loading-content');
-      expect(skeletonElement).toBeInTheDocument();
-    });
+    const skeletonElement = document.querySelector('.skeleton');
+    expect(skeletonElement).toHaveClass('my-skeleton');
   });
 });

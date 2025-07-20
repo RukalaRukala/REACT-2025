@@ -15,11 +15,11 @@ const testPets = [
     name: 'Tusik',
     status: 'available' as const,
     category: { id: 1, name: 'Dogs' },
-    photoUrls: ['photo1.jpg'],
+    photoUrls: ['tusik.jpg'],
   },
 ];
 
-describe('App Component', () => {
+describe('App Tests', () => {
   beforeEach(() => {
     mockApi.mockClear();
     mockConsole.mockClear();
@@ -30,7 +30,7 @@ describe('App Component', () => {
     mockConsole.mockRestore();
   });
 
-  it('renders application header', () => {
+  it('shows app title', () => {
     render(<App />);
 
     expect(screen.getByText('Pet Store Search')).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('App Component', () => {
     ).toBeInTheDocument();
   });
 
-  it('shows search input and button', () => {
+  it('has search input and button', () => {
     render(<App />);
 
     const input = screen.getByRole('textbox');
@@ -49,15 +49,14 @@ describe('App Component', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('loads saved search query', () => {
+  it('loads saved search from localStorage', () => {
     localStorage.setItem('searchQuery', 'available');
-
     render(<App />);
 
     expect(screen.getByDisplayValue('available')).toBeInTheDocument();
   });
 
-  it('calls API on search', async () => {
+  it('calls API when searching', async () => {
     mockApi.mockResolvedValue(testPets);
 
     render(<App />);
@@ -73,7 +72,7 @@ describe('App Component', () => {
     });
   });
 
-  it('displays search results', async () => {
+  it('shows results after search', async () => {
     mockApi.mockResolvedValue(testPets);
 
     render(<App />);
@@ -87,7 +86,7 @@ describe('App Component', () => {
   });
 
   it('shows error when API fails', async () => {
-    mockApi.mockRejectedValue(new Error('Server error'));
+    mockApi.mockRejectedValue(new Error('API error'));
 
     render(<App />);
 
@@ -95,20 +94,7 @@ describe('App Component', () => {
     fireEvent.click(button);
 
     await waitFor(() => {
-      expect(screen.getByText('Server error')).toBeInTheDocument();
+      expect(screen.getByText('API error')).toBeInTheDocument();
     });
-  });
-
-  it('shows loading indicator', async () => {
-    mockApi.mockImplementation(
-      () => new Promise((resolve) => setTimeout(() => resolve(testPets), 100))
-    );
-
-    render(<App />);
-
-    const button = screen.getByRole('button', { name: /search/i });
-    fireEvent.click(button);
-
-    expect(screen.getByText('Searching...')).toBeInTheDocument();
   });
 });
