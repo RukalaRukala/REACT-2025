@@ -1,0 +1,35 @@
+@use '../../../styles/functions.scss' as *;
+@use '../../../styles/colors.scss' as *;
+
+.skeletonItem {
+  background: $card-bg;
+  border: toRem(1) solid $card-border;
+  border-radius: toRem(12);
+  padding: toRem(20);
+  margin-bottom: toRem(16);
+  box-shadow: 0 toRem(2) toRem(4) $card-shadow;
+}
+
+.skeletonItem:last-child {
+  margin-bottom: 0;
+}
+
+.statusSkeleton {
+  margin-bottom: toRem(12);
+  border-radius: toRem(20);
+}
+
+.field {
+  margin-bottom: toRem(8);
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .skeletonItem {
+    border-color: $skeleton-dark-border;
+    background-color: $skeleton-dark-container-bg;
+  }
+}
