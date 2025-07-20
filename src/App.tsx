@@ -16,7 +16,6 @@ interface AppState {
   isLoading: boolean;
   hasSearched: boolean;
   searchError: string | null;
-  currentSearchQuery: string;
 }
 
 class App extends Component<Record<string, never>, AppState> {
@@ -28,7 +27,6 @@ class App extends Component<Record<string, never>, AppState> {
       isLoading: false,
       hasSearched: false,
       searchError: null,
-      currentSearchQuery: '',
     };
   }
 

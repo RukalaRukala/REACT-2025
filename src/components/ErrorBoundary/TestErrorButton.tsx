@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { TEST_ERROR_MESSAGES } from '../Search/Search.const.tsx';
+import styles from './TestErrorButton.module.scss';
 
 interface TestErrorButtonState {
   shouldThrowError: boolean;
@@ -28,15 +29,7 @@ class TestErrorButton extends Component<
     return (
       <button
         onClick={this.handleThrowError}
-        style={{
-          padding: '8px 16px',
-          backgroundColor: '#dc2626',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          marginTop: '16px',
-        }}
+        className={styles.testErrorButton}
       >
         {TEST_ERROR_MESSAGES.BUTTON_TEXT}
       </button>

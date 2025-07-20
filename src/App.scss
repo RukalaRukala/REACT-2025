@@ -14,13 +14,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   padding: toRem(32) toRem(16);
   gap: toRem(32);
+  max-width: toRem(1200);
+  width: 100%;
+  margin: 0 auto;
 }
 
 .app-header {
   text-align: center;
   margin-bottom: toRem(16);
+  width: 100%;
 }
 
 .app-title {
@@ -66,4 +71,24 @@ body {
   color: $heading-color;
   margin: 0 0 toRem(20) 0;
   text-align: center;
+}
+
+// Responsive design for better centering on mobile devices
+@media (max-width: 768px) {
+  .app {
+    padding: toRem(16) toRem(12);
+    gap: toRem(24);
+  }
+
+  .search-section {
+    padding: toRem(16);
+  }
+
+  .app-title {
+    font-size: toRem(28);
+  }
+
+  .app-subtitle {
+    font-size: toRem(16);
+  }
 }

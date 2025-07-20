@@ -34,8 +34,8 @@ class Results extends Component<ResultsProps> {
 
     return (
       <div className={styles.results}>
-        {pets.map((pet) => (
-          <Item key={pet.id} pet={pet} />
+        {pets.map((pet, index) => (
+          <Item key={`${pet.id}-${index}`} pet={pet} />
         ))}
       </div>
     );

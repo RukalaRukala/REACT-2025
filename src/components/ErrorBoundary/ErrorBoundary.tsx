@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import type { ReactNode, ErrorInfo } from 'react';
 import { ERROR_BOUNDARY_MESSAGES } from '../Search/Search.const.tsx';
+import styles from './ErrorBoundary.module.scss';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -54,70 +55,30 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render(): ReactNode {
     if (this.state.hasError) {
       return (
-        <div
-          style={{
-            padding: '40px',
-            textAlign: 'center',
-            backgroundColor: '#fef2f2',
-            border: '1px solid #fecaca',
-            borderRadius: '8px',
-            margin: '20px',
-            fontFamily: 'Arial, sans-serif',
-          }}
-        >
-          <h2 style={{ color: '#dc2626', marginBottom: '16px' }}>
-            {ERROR_BOUNDARY_MESSAGES.TITLE}
-          </h2>
-          <p style={{ color: '#7f1d1d', marginBottom: '24px' }}>
+        <div className={styles.errorContainer}>
+          <h2 className={styles.errorTitle}>{ERROR_BOUNDARY_MESSAGES.TITLE}</h2>
+          <p className={styles.errorDescription}>
             {ERROR_BOUNDARY_MESSAGES.DESCRIPTION}
           </p>
 
-          <div
-            style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}
-          >
+          <div className={styles.buttonContainer}>
             <button
               onClick={this.handleReset}
-              style={{
-                padding: '8px 16px',
-                backgroundColor: '#3b82f6',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
+              className={styles.tryAgainButton}
             >
               {ERROR_BOUNDARY_MESSAGES.TRY_AGAIN}
             </button>
-            <button
-              onClick={this.handleReload}
-              style={{
-                padding: '8px 16px',
-                backgroundColor: '#6b7280',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
+            <button onClick={this.handleReload} className={styles.reloadButton}>
               {ERROR_BOUNDARY_MESSAGES.RELOAD_PAGE}
             </button>
           </div>
 
           {this.state.error && (
-            <details style={{ marginTop: '24px', textAlign: 'left' }}>
-              <summary style={{ cursor: 'pointer', fontWeight: 'bold' }}>
+            <details className={styles.errorDetails}>
+              <summary className={styles.errorSummary}>
                 {ERROR_BOUNDARY_MESSAGES.ERROR_DETAILS}
               </summary>
-              <pre
-                style={{
-                  backgroundColor: '#f3f4f6',
-                  padding: '16px',
-                  borderRadius: '4px',
-                  overflow: 'auto',
-                  marginTop: '8px',
-                  fontSize: '12px',
-                }}
-              >
+              <pre className={styles.errorPre}>
                 {this.state.error.toString()}
                 {this.state.errorInfo && this.state.errorInfo.componentStack}
               </pre>

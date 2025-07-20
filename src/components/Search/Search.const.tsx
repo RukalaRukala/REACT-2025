@@ -1,7 +1,6 @@
 export const EMPTY_STRING = '';
 export const STORAGE_KEY = 'searchQuery';
 export const SEARCH_BUTTON_TEXT = 'Search';
-
 export const PLACEHOLDER = 'Enter pet status (available, pending, sold)';
 
 export const ITEM_LABELS = {
@@ -48,12 +47,10 @@ export const STATUS_HINT_LABELS = {
   TITLE: 'Enter one of these status types:',
 } as const;
 
-// Results constants
 export const RESULTS_MESSAGES = {
   NO_PETS_FOUND: 'No pets found',
 } as const;
 
-// Error Boundary constants
 export const ERROR_BOUNDARY_MESSAGES = {
   TITLE: 'Oops! Something went wrong',
   DESCRIPTION: 'An unexpected error occurred in the application.',
@@ -62,7 +59,6 @@ export const ERROR_BOUNDARY_MESSAGES = {
   ERROR_DETAILS: 'Error Details (Development Only)',
 } as const;
 
-// Test Error Button constants
 export const TEST_ERROR_MESSAGES = {
   BUTTON_TEXT: 'Test Error Boundary',
   ERROR_MESSAGE: 'This is a test error thrown intentionally!',
