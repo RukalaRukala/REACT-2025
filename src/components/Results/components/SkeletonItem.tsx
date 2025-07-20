@@ -5,7 +5,7 @@ import styles from './SkeletonItem.module.scss';
 class SkeletonItem extends Component {
   render() {
     return (
-      <div className={styles.skeletonItem}>
+      <div className={styles.skeletonItem} data-testid="skeleton-item">
         <div className={styles.imageContainer}>
           <Skeleton className={styles.imageSkeleton} />
         </div>

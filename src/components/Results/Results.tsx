@@ -45,7 +45,7 @@ class Results extends Component<ResultsProps> {
     const { pets, isLoading } = this.props;
 
     if (isLoading) return this.renderLoadingSkeletons();
-    if (!pets.length) return this.renderNoResults();
+    if (!pets || !pets.length) return this.renderNoResults();
 
     return this.renderPetsList();
   }
