@@ -31,11 +31,12 @@
 
 .statuses {
   display: flex;
+  flex-direction: column;
   gap: toRem(8);
-  flex-wrap: wrap;
 }
 
 .status {
+  margin: auto;
   background: $white;
   border: toRem(1) solid $notification-border;
   border-radius: toRem(16);

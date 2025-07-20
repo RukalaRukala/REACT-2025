@@ -1,20 +1,31 @@
+import { Component } from 'react';
 import Skeleton from '../../Skeleton/Skeleton.tsx';
 import styles from './SkeletonItem.module.scss';
 
-function SkeletonItem() {
-  return (
-    <div className={styles.skeletonItem}>
-      <Skeleton
-        height="1.75rem"
-        width="5rem"
-        borderRadius="1.25rem"
-        className={styles.statusSkeleton}
-      />
-      <Skeleton height="1.25rem" width="5rem" className={styles.field} />
-      <Skeleton height="1.25rem" width="9.375rem" className={styles.field} />
-      <Skeleton height="1.25rem" width="6.25rem" className={styles.field} />
-    </div>
-  );
+class SkeletonItem extends Component {
+  render() {
+    return (
+      <div className={styles.skeletonItem}>
+        <div className={styles.imageContainer}>
+          <Skeleton className={styles.imageSkeleton} />
+        </div>
+
+        <div className={styles.content}>
+          <Skeleton className={styles.nameSkeleton} />
+
+          <div className={styles.details}>
+            <Skeleton className={styles.statusSkeleton} />
+            <Skeleton className={styles.categorySkeleton} />
+          </div>
+
+          <div className={styles.tags}>
+            <Skeleton className={styles.tagSkeleton} />
+            <Skeleton className={styles.tagSkeleton} />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default SkeletonItem;

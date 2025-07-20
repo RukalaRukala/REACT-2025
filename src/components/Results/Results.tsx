@@ -1,5 +1,7 @@
+import { Component } from 'react';
 import Item from './components/Item.tsx';
 import SkeletonItem from './components/SkeletonItem.tsx';
+import { RESULTS_MESSAGES } from '../Search/Search.const.tsx';
 import styles from './Results.module.scss';
 import type { Pet } from '../Search/Search.model.tsx';
 
@@ -8,8 +10,8 @@ interface ResultsProps {
   isLoading: boolean;
 }
 
-function Results({ pets, isLoading }: ResultsProps) {
-  if (isLoading) {
+class Results extends Component<ResultsProps> {
+  renderLoadingSkeletons = () => {
     return (
       <div className={styles.results}>
         <SkeletonItem />
@@ -17,23 +19,36 @@ function Results({ pets, isLoading }: ResultsProps) {
         <SkeletonItem />
       </div>
     );
-  }
+  };
 
-  if (!pets.length) {
+  renderNoResults = () => {
     return (
       <div className={styles.results}>
-        <div className={styles.noResults}>No results found</div>
+        <div className={styles.noResults}>{RESULTS_MESSAGES.NO_PETS_FOUND}</div>
       </div>
     );
-  }
+  };
 
-  return (
-    <div className={styles.results}>
-      {pets.map((pet) => (
-        <Item key={pet.id} pet={pet} />
-      ))}
-    </div>
-  );
+  renderPetsList = () => {
+    const { pets } = this.props;
+
+    return (
+      <div className={styles.results}>
+        {pets.map((pet) => (
+          <Item key={pet.id} pet={pet} />
+        ))}
+      </div>
+    );
+  };
+
+  render() {
+    const { pets, isLoading } = this.props;
+
+    if (isLoading) return this.renderLoadingSkeletons();
+    if (!pets.length) return this.renderNoResults();
+
+    return this.renderPetsList();
+  }
 }
 
 export default Results;
