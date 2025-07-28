@@ -1,8 +1,8 @@
-import { Component } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import SearchField from './components/SearchField.tsx';
 import SearchButton from './components/SearchButton.tsx';
 import StatusHint from './components/StatusHint.tsx';
-import type { SearchProps, SearchState } from './Search.model.tsx';
+import type { SearchProps } from './Search.model.tsx';
 import {
   EMPTY_STRING,
   STORAGE_KEY,
@@ -10,24 +10,10 @@ import {
 } from './Search.const.tsx';
 import styles from './Search.module.scss';
 
-class Search extends Component<SearchProps, SearchState> {
-  private debounceTimer: ReturnType<typeof setTimeout> | null = null;
+const Search = ({ onSearch }: SearchProps) => {
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  constructor(props: SearchProps) {
-    super(props);
-
-    this.state = {
-      searchQuery: this.loadSearchQueryFromStorage(),
-    };
-  }
-
-  componentWillUnmount(): void {
-    if (this.debounceTimer) {
-      clearTimeout(this.debounceTimer);
-    }
-  }
-
-  loadSearchQueryFromStorage = (): string => {
+  const loadSearchQueryFromStorage = (): string => {
     try {
       const savedQuery = localStorage.getItem(STORAGE_KEY);
       return savedQuery || EMPTY_STRING;
@@ -37,61 +23,67 @@ class Search extends Component<SearchProps, SearchState> {
     }
   };
 
-  saveSearchQueryToStorage = (query: string): void => {
-    if (this.debounceTimer) {
-      clearTimeout(this.debounceTimer);
+  const [searchQuery, setSearchQuery] = useState<string>(
+    loadSearchQueryFromStorage
+  );
+
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
+  const saveSearchQueryToStorage = useCallback((query: string): void => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
     }
 
-    this.debounceTimer = setTimeout(() => {
+    debounceTimerRef.current = setTimeout(() => {
       try {
         localStorage.setItem(STORAGE_KEY, query);
       } catch (error) {
         console.warn(CONSOLE_MESSAGES.STORAGE_SAVE_ERROR, error);
       }
     }, 500);
-  };
+  }, []);
 
-  handleSearchChange = (value: string): void => {
-    this.setState({ searchQuery: value });
-    this.saveSearchQueryToStorage(value);
-  };
+  const handleSearchChange = useCallback(
+    (value: string): void => {
+      setSearchQuery(value);
+      saveSearchQueryToStorage(value);
+    },
+    [saveSearchQueryToStorage]
+  );
 
-  handleSearch = (): void => {
-    const { onSearch } = this.props;
-    const { searchQuery } = this.state;
-
+  const handleSearch = useCallback((): void => {
     try {
       onSearch(searchQuery);
     } catch (error) {
       console.error(CONSOLE_MESSAGES.SEARCH_START_ERROR, error);
     }
+  }, [onSearch, searchQuery]);
+
+  const renderSearchField = () => {
+    return <SearchField value={searchQuery} onChange={handleSearchChange} />;
   };
 
-  renderSearchField = () => {
-    const { searchQuery } = this.state;
-
-    return (
-      <SearchField value={searchQuery} onChange={this.handleSearchChange} />
-    );
+  const renderSearchButton = () => {
+    return <SearchButton onSearch={handleSearch} />;
   };
 
-  renderSearchButton = () => {
-    return <SearchButton onSearch={this.handleSearch} />;
-  };
-
-  renderStatusHint = () => {
+  const renderStatusHint = () => {
     return <StatusHint />;
   };
 
-  render() {
-    return (
-      <div className={styles.searchContainer}>
-        {this.renderSearchField()}
-        {this.renderSearchButton()}
-        {this.renderStatusHint()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className={styles.searchContainer}>
+      {renderSearchField()}
+      {renderSearchButton()}
+      {renderStatusHint()}
+    </div>
+  );
+};
 
 export default Search;

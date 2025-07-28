@@ -1,18 +1,17 @@
-import { Component } from 'react';
 import { STATUS_HINT_LABELS } from '../Search.const.tsx';
 import styles from './StatusHint.module.scss';
 
-class StatusHint extends Component {
-  getAvailableStatuses = (): string[] => {
+const StatusHint = () => {
+  const getAvailableStatuses = (): string[] => {
     return ['available', 'pending', 'sold'];
   };
 
-  renderTitle = () => {
+  const renderTitle = () => {
     return <p className={styles.title}>{STATUS_HINT_LABELS.TITLE}</p>;
   };
 
-  renderStatusesList = () => {
-    const statuses = this.getAvailableStatuses();
+  const renderStatusesList = () => {
+    const statuses = getAvailableStatuses();
 
     return (
       <div className={styles.statuses}>
@@ -25,18 +24,16 @@ class StatusHint extends Component {
     );
   };
 
-  renderContent = () => {
+  const renderContent = () => {
     return (
       <div className={styles.content}>
-        {this.renderTitle()}
-        {this.renderStatusesList()}
+        {renderTitle()}
+        {renderStatusesList()}
       </div>
     );
   };
 
-  render() {
-    return <div className={styles.hint}>{this.renderContent()}</div>;
-  }
-}
+  return <div className={styles.hint}>{renderContent()}</div>;
+};
 
 export default StatusHint;
