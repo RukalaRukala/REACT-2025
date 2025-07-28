@@ -25,15 +25,7 @@ const SearchField = ({ value, onChange }: SearchFieldProps) => {
     );
   };
 
-  return (
-    <div className={styles.searchFieldContainer}>
-      {renderInput()}
-
-      {value.trim().length === 0 && (
-        <div className={styles.hint}>{SEARCH_FIELD_LABELS.HINT_TEXT}</div>
-      )}
-    </div>
-  );
+  return <div className={styles.searchFieldContainer}>{renderInput()}</div>;
 };
 
 export default SearchField;

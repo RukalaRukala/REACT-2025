@@ -1,7 +1,7 @@
 export const EMPTY_STRING = '';
 export const STORAGE_KEY = 'searchQuery';
 export const SEARCH_BUTTON_TEXT = 'Search';
-export const PLACEHOLDER = 'Enter pet status (available, pending, sold)';
+export const PLACEHOLDER = 'Enter pet status';
 
 export const ITEM_LABELS = {
   ID: 'ID:',
