@@ -1,0 +1,64 @@
+@use '../../../styles/functions.scss' as *;
+@use '../../../styles/colors.scss' as *;
+
+.mainView {
+  display: flex;
+  gap: toRem(24);
+  height: 100vh;
+  align-items: flex-start;
+}
+
+.mainView__left {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-y: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.mainView__left--with-details {
+  max-width: 50%;
+}
+
+.mainView__right {
+  flex: 0 0 toRem(400);
+  min-width: toRem(320);
+  max-width: toRem(500);
+  border-left: 1px solid $mainView-border-color;
+  padding-left: toRem(24);
+  background: $mainView-bg;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.appHeader {
+  text-align: center;
+  margin-bottom: toRem(24);
+  width: 100%;
+}
+
+.appTitle {
+  font-size: toRem(32);
+  font-weight: 700;
+  color: $mainView-title-color;
+  margin: 0 0 toRem(8) 0;
+}
+
+.appSubtitle {
+  font-size: toRem(18);
+  color: $mainView-subtitle-color;
+  margin: 0;
+  font-weight: 400;
+}
+
+.notFound {
+  padding: toRem(32);
+  text-align: center;
+}

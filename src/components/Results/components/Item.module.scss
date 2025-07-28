@@ -2,21 +2,31 @@
 @use '../../../styles/colors.scss' as *;
 
 .item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
   background: $card-bg;
   border: toRem(1) solid $card-border;
-  border-radius: toRem(12);
-  padding: toRem(20);
-  margin-bottom: toRem(16);
-  box-shadow: 0 toRem(2) toRem(4) $card-shadow;
-  transition: all 0.2s ease-in-out;
+  border-radius: toRem(8);
+  padding: toRem(12);
+  margin-bottom: toRem(8);
+  box-shadow: 0 toRem(1) toRem(2) $card-shadow;
+  transition: all 0.15s;
   position: relative;
   overflow: hidden;
+  outline: none;
+}
+
+.item:focus {
+  outline: toRem(2) solid $blue-primary;
+  outline-offset: toRem(2);
 }
 
 .item:hover {
-  box-shadow: 0 toRem(8) toRem(25) $card-shadow-hover;
-  transform: translateY(toRem(-2));
+  box-shadow: 0 toRem(4) toRem(12) $card-shadow-hover;
+  transform: translateY(toRem(-1));
   border-color: $blue-primary;
+  text-decoration: none;
 }
 
 .item:last-child {
@@ -24,14 +34,14 @@
 }
 
 .status {
-  font-size: toRem(18);
+  font-size: toRem(14);
   font-weight: 600;
-  margin: 0 0 toRem(12) 0;
-  padding: toRem(6) toRem(12);
-  border-radius: toRem(20);
+  margin: 0 0 toRem(6) 0;
+  padding: toRem(3) toRem(8);
+  border-radius: toRem(14);
   display: inline-block;
   text-transform: uppercase;
-  letter-spacing: toRem(0.5);
+  letter-spacing: toRem(0.3);
 }
 
 .status.available {
@@ -53,21 +63,18 @@
 }
 
 .field {
-  margin-bottom: toRem(8);
-  font-size: toRem(14);
-  line-height: 1.5;
-}
-
-.field:last-child {
-  margin-bottom: 0;
+  margin: 0 0 toRem(4) 0;
+  font-size: toRem(13);
+  display: flex;
+  gap: toRem(4);
 }
 
 .field-label {
-  font-weight: 600;
-  color: $text-primary;
+  color: $text-secondary;
+  min-width: toRem(60);
 }
 
 .field-value {
-  color: $text-secondary;
-  margin-left: toRem(4);
+  color: $text-primary;
+  font-weight: 500;
 }

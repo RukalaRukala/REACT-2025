@@ -1,14 +1,24 @@
 import type { Pet } from '../../Search/Search.model.tsx';
 import { ITEM_LABELS, DEFAULT_VALUES } from '../../Search/Search.const.tsx';
 import styles from './Item.module.scss';
+import { Link, useLocation } from 'react-router-dom';
 
 interface ItemProps {
   pet: Pet;
 }
 
 const Item = ({ pet }: ItemProps) => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const page = searchParams.get('page') || '1';
+  const detailsUrl = `/${page}/${pet.id}`;
+
   return (
-    <div className={styles.item}>
+    <Link
+      to={detailsUrl}
+      className={styles.item}
+      state={{ background: location }}
+    >
       <h2 className={`${styles.status} ${styles[pet.status]}`}>{pet.status}</h2>
 
       <p className={styles.field}>
@@ -27,7 +37,7 @@ const Item = ({ pet }: ItemProps) => {
           {pet.category?.name || DEFAULT_VALUES.CATEGORY_NOT_SPECIFIED}
         </span>
       </p>
-    </div>
+    </Link>
   );
 };
 

@@ -13,18 +13,6 @@ export const DEFAULT_VALUES = {
   CATEGORY_NOT_SPECIFIED: 'Not specified',
 } as const;
 
-export const APP_TITLES = {
-  MAIN_TITLE: 'Pet Store Search',
-  SUBTITLE: 'Find your perfect pet by status',
-  SEARCH_SECTION: 'Search Pets',
-} as const;
-
-export const APP_MESSAGES = {
-  SEARCHING: 'Searching...',
-  SEARCH_RESULTS: 'Search Results',
-  ERROR_OCCURRED: 'An error occurred while searching for pets',
-} as const;
-
 export const CONSOLE_MESSAGES = {
   SEARCH_ERROR: 'Search error:',
   STORAGE_LOAD_ERROR: 'Failed to load search query from storage:',
@@ -45,10 +33,6 @@ export const SEARCH_BUTTON_LABELS = {
 export const STATUS_HINT_LABELS = {
   ICON_TEXT: 'Hint',
   TITLE: 'Enter one of these status types:',
-} as const;
-
-export const RESULTS_MESSAGES = {
-  NO_PETS_FOUND: 'No pets found',
 } as const;
 
 export const ERROR_BOUNDARY_MESSAGES = {

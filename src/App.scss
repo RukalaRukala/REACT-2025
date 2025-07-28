@@ -73,7 +73,52 @@ body {
   text-align: center;
 }
 
-// Responsive design for better centering on mobile devices
+.main-view {
+  display: flex;
+  gap: 24px;
+  height: 100vh;
+  align-items: flex-start;
+}
+
+.main-view__left {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-y: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.main-view__left--with-details {
+  max-width: 50%;
+}
+
+.main-view__right {
+  flex: 0 0 400px;
+  min-width: 320px;
+  max-width: 500px;
+  border-left: 1px solid $mainView-border-color;
+  padding-left: 24px;
+  background: $mainView-bg;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.app-header {
+  margin-bottom: 24px;
+}
+
+.not-found {
+  padding: 32px;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .app {
     padding: toRem(16) toRem(12);

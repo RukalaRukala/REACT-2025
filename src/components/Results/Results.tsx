@@ -1,6 +1,5 @@
 import Item from './components/Item.tsx';
 import SkeletonItem from './components/SkeletonItem.tsx';
-import { RESULTS_MESSAGES } from '../Search/Search.const.tsx';
 import styles from './Results.module.scss';
 import type { Pet } from '../Search/Search.model.tsx';
 
@@ -20,14 +19,6 @@ const Results = ({ pets, isLoading }: ResultsProps) => {
     );
   };
 
-  const renderNoResults = () => {
-    return (
-      <div className={styles.results}>
-        <div className={styles.noResults}>{RESULTS_MESSAGES.NO_PETS_FOUND}</div>
-      </div>
-    );
-  };
-
   const renderPetsList = () => {
     return (
       <div className={styles.results}>
@@ -39,7 +30,7 @@ const Results = ({ pets, isLoading }: ResultsProps) => {
   };
 
   if (isLoading) return renderLoadingSkeletons();
-  if (!pets || !pets.length) return renderNoResults();
+  if (!pets || !pets.length) return null;
 
   return renderPetsList();
 };

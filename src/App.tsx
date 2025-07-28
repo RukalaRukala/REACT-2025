@@ -1,15 +1,11 @@
 import { useState, useCallback } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.scss';
-import Search from './components/Search/Search.tsx';
-import Results from './components/Results/Results.tsx';
-import TestErrorButton from './components/ErrorBoundary/TestErrorButton.tsx';
 import { searchPetsByStatus } from './components/Search/Search.api.tsx';
 import type { Pet } from './components/Search/Search.model.tsx';
-import {
-  APP_TITLES,
-  APP_MESSAGES,
-  CONSOLE_MESSAGES,
-} from './components/Search/Search.const.tsx';
+import { APP_MESSAGES, APP_ROUTES } from './App.const';
+import MainView from './components/pages/MainView/MainView.tsx';
+import NotFound from './components/pages/NotFound.tsx';
 
 interface AppState {
   searchResults: Pet[];
@@ -27,9 +23,9 @@ const App = () => {
   });
 
   const handleSearchError = useCallback((error: unknown): void => {
-    console.error(CONSOLE_MESSAGES.SEARCH_ERROR, error);
+    console.error('Search error:', error);
 
-    let errorMessage: string = APP_MESSAGES.ERROR_OCCURRED;
+    let errorMessage: string = APP_MESSAGES.NOT_FOUND;
 
     if (error instanceof Error) {
       errorMessage = error.message;
@@ -71,56 +67,21 @@ const App = () => {
     [handleSearchError]
   );
 
-  const hasError = (): boolean => {
-    return state.searchError !== null;
-  };
-
-  const renderHeader = () => {
-    return (
-      <header className="app-header">
-        <h1 className="app-title">{APP_TITLES.MAIN_TITLE}</h1>
-        <p className="app-subtitle">{APP_TITLES.SUBTITLE}</p>
-        <TestErrorButton />
-      </header>
-    );
-  };
-
-  const renderSearchSection = () => {
-    return (
-      <section className="search-section">
-        <h2 className="search-section-title">{APP_TITLES.SEARCH_SECTION}</h2>
-        <Search onSearch={handleSearch} />
-
-        {hasError() && <div className="error-message">{state.searchError}</div>}
-      </section>
-    );
-  };
-
-  const renderResultsSection = () => {
-    const { searchResults, isLoading, hasSearched } = state;
-
-    if (!hasSearched) {
-      return <></>;
-    }
-
-    return (
-      <section className="results-section">
-        <h2 className="results-section-title">
-          {isLoading
-            ? APP_MESSAGES.SEARCHING
-            : `${APP_MESSAGES.SEARCH_RESULTS} ${searchResults.length > 0 ? `(${searchResults.length})` : ''}`}
-        </h2>
-        <Results pets={searchResults} isLoading={isLoading} />
-      </section>
-    );
-  };
-
   return (
-    <div className="app">
-      {renderHeader()}
-      {renderSearchSection()}
-      {renderResultsSection()}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path={APP_ROUTES.ROOT} element={<Navigate to="/1" replace />} />
+        <Route
+          path={APP_ROUTES.PAGE}
+          element={<MainView state={state} handleSearch={handleSearch} />}
+        />
+        <Route
+          path={APP_ROUTES.DETAILS}
+          element={<MainView state={state} handleSearch={handleSearch} />}
+        />
+        <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
