@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import Item from './components/Item.tsx';
 import SkeletonItem from './components/SkeletonItem.tsx';
 import { RESULTS_MESSAGES } from '../Search/Search.const.tsx';
@@ -10,8 +9,8 @@ interface ResultsProps {
   isLoading: boolean;
 }
 
-class Results extends Component<ResultsProps> {
-  renderLoadingSkeletons = () => {
+const Results = ({ pets, isLoading }: ResultsProps) => {
+  const renderLoadingSkeletons = () => {
     return (
       <div className={styles.results}>
         <SkeletonItem />
@@ -21,7 +20,7 @@ class Results extends Component<ResultsProps> {
     );
   };
 
-  renderNoResults = () => {
+  const renderNoResults = () => {
     return (
       <div className={styles.results}>
         <div className={styles.noResults}>{RESULTS_MESSAGES.NO_PETS_FOUND}</div>
@@ -29,9 +28,7 @@ class Results extends Component<ResultsProps> {
     );
   };
 
-  renderPetsList = () => {
-    const { pets } = this.props;
-
+  const renderPetsList = () => {
     return (
       <div className={styles.results}>
         {pets.map((pet, index) => (
@@ -41,14 +38,10 @@ class Results extends Component<ResultsProps> {
     );
   };
 
-  render() {
-    const { pets, isLoading } = this.props;
+  if (isLoading) return renderLoadingSkeletons();
+  if (!pets || !pets.length) return renderNoResults();
 
-    if (isLoading) return this.renderLoadingSkeletons();
-    if (!pets || !pets.length) return this.renderNoResults();
-
-    return this.renderPetsList();
-  }
-}
+  return renderPetsList();
+};
 
 export default Results;
