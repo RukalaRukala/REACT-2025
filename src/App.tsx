@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, useCallback } from 'react';
 import './App.scss';
 import Search from './components/Search/Search.tsx';
 import Results from './components/Results/Results.tsx';
@@ -18,19 +18,15 @@ interface AppState {
   searchError: string | null;
 }
 
-class App extends Component<Record<string, never>, AppState> {
-  constructor(props: Record<string, never>) {
-    super(props);
+const App = () => {
+  const [state, setState] = useState<AppState>({
+    searchResults: [],
+    isLoading: false,
+    hasSearched: false,
+    searchError: null,
+  });
 
-    this.state = {
-      searchResults: [],
-      isLoading: false,
-      hasSearched: false,
-      searchError: null,
-    };
-  }
-
-  handleSearchError = (error: unknown): void => {
+  const handleSearchError = useCallback((error: unknown): void => {
     console.error(CONSOLE_MESSAGES.SEARCH_ERROR, error);
 
     let errorMessage: string = APP_MESSAGES.ERROR_OCCURRED;
@@ -41,39 +37,45 @@ class App extends Component<Record<string, never>, AppState> {
       errorMessage = error;
     }
 
-    this.setState({
+    setState((prevState) => ({
+      ...prevState,
       searchError: errorMessage,
       searchResults: [],
       isLoading: false,
-    });
-  };
+    }));
+  }, []);
 
-  handleSearch = async (query: string): Promise<void> => {
-    this.setState({
-      isLoading: true,
-      hasSearched: true,
-      searchError: null,
-      searchResults: [],
-    });
-
-    try {
-      const results = await searchPetsByStatus(query);
-
-      this.setState({
-        searchResults: results,
-        isLoading: false,
+  const handleSearch = useCallback(
+    async (query: string): Promise<void> => {
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: true,
+        hasSearched: true,
         searchError: null,
-      });
-    } catch (error) {
-      this.handleSearchError(error);
-    }
+        searchResults: [],
+      }));
+
+      try {
+        const results = await searchPetsByStatus(query);
+
+        setState((prevState) => ({
+          ...prevState,
+          searchResults: results,
+          isLoading: false,
+          searchError: null,
+        }));
+      } catch (error) {
+        handleSearchError(error);
+      }
+    },
+    [handleSearchError]
+  );
+
+  const hasError = (): boolean => {
+    return state.searchError !== null;
   };
 
-  hasError = (): boolean => {
-    return this.state.searchError !== null;
-  };
-
-  renderHeader = () => {
+  const renderHeader = () => {
     return (
       <header className="app-header">
         <h1 className="app-title">{APP_TITLES.MAIN_TITLE}</h1>
@@ -83,21 +85,19 @@ class App extends Component<Record<string, never>, AppState> {
     );
   };
 
-  renderSearchSection = () => {
+  const renderSearchSection = () => {
     return (
       <section className="search-section">
         <h2 className="search-section-title">{APP_TITLES.SEARCH_SECTION}</h2>
-        <Search onSearch={this.handleSearch} />
+        <Search onSearch={handleSearch} />
 
-        {this.hasError() && (
-          <div className="error-message">{this.state.searchError}</div>
-        )}
+        {hasError() && <div className="error-message">{state.searchError}</div>}
       </section>
     );
   };
 
-  renderResultsSection = () => {
-    const { searchResults, isLoading, hasSearched } = this.state;
+  const renderResultsSection = () => {
+    const { searchResults, isLoading, hasSearched } = state;
 
     if (!hasSearched) {
       return <></>;
@@ -115,15 +115,13 @@ class App extends Component<Record<string, never>, AppState> {
     );
   };
 
-  render() {
-    return (
-      <div className="app">
-        {this.renderHeader()}
-        {this.renderSearchSection()}
-        {this.renderResultsSection()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="app">
+      {renderHeader()}
+      {renderSearchSection()}
+      {renderResultsSection()}
+    </div>
+  );
+};
 
 export default App;
