@@ -59,7 +59,11 @@ describe('App Tests', () => {
       ),
     }));
 
-    render(<App />);
+    render(
+      <MemoryRouter initialEntries={['/1']}>
+        <App />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('Pet Store Search')).toBeInTheDocument();
     expect(
@@ -78,10 +82,18 @@ describe('App Tests', () => {
       ),
     }));
 
-    render(<App />);
+    render(
+      <MemoryRouter initialEntries={['/1']}>
+        <App />
+      </MemoryRouter>
+    );
 
-    expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText(/enter pet status/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /start pet search/i })
+    ).toBeInTheDocument();
   });
 
   test('performs search when form is submitted', async () => {
@@ -106,15 +118,18 @@ describe('App Tests', () => {
       },
     }));
 
-    render(<App />);
+    render(
+      <MemoryRouter initialEntries={['/1']}>
+        <App />
+      </MemoryRouter>
+    );
 
-    const input = screen.getByPlaceholderText(/search/i);
-    const button = screen.getByRole('button', { name: /search/i });
+    const input = screen.getByPlaceholderText(/enter pet status/i);
+    const button = screen.getByRole('button', { name: /start pet search/i });
 
     await user.type(input, 'available');
     await user.click(button);
 
-    // Call the search handler directly
     await searchHandler('available');
 
     expect(mockSearchApi).toHaveBeenCalledWith('available');
@@ -136,20 +151,14 @@ describe('App Tests', () => {
       ),
     }));
 
-    render(<App />);
-
-    const appInstance = (await import('../App')).default();
-    const handleSearch =
-      appInstance.props.children.props.children[1].props.element.props
-        .handleSearch;
-    await handleSearch('available');
-
     render(
-      <div>
-        <div data-testid="pet-item-1">Rex</div>
-        <div data-testid="pet-item-2">Fluffy</div>
-      </div>
+      <MemoryRouter initialEntries={['/1']}>
+        <App />
+      </MemoryRouter>
     );
+
+    const button = screen.getByRole('button', { name: /search/i });
+    await userEvent.click(button);
 
     await waitFor(() => {
       expect(screen.getByTestId('pet-item-1')).toBeInTheDocument();

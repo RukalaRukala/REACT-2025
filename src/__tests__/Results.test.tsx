@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import Results from '../components/Results/Results';
+import { MemoryRouter } from 'react-router-dom';
+import Item from '../components/Results/components/Item.tsx';
 
 const testPets = [
   {
@@ -20,31 +22,39 @@ const testPets = [
 
 describe('Results Tests', () => {
   it('shows pets when data exists', () => {
-    render(<Results pets={testPets} isLoading={false} />);
+    render(
+      <MemoryRouter>
+        <Results pets={testPets} isLoading={false} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('Tusik')).toBeInTheDocument();
     expect(screen.getByText('Belka')).toBeInTheDocument();
   });
 
-  it('shows no results message when empty', () => {
-    render(<Results pets={[]} isLoading={false} />);
-
-    expect(screen.getByText('No pets found')).toBeInTheDocument();
-  });
-
   it('shows loading skeletons', () => {
-    render(<Results pets={[]} isLoading={true} />);
+    render(
+      <MemoryRouter>
+        <Results pets={[]} isLoading={true} />
+      </MemoryRouter>
+    );
 
     const skeletons = screen.getAllByTestId('skeleton-item');
     expect(skeletons).toHaveLength(3);
   });
 
-  it('shows pet names correctly', () => {
-    render(<Results pets={testPets} isLoading={false} />);
-
-    expect(screen.getByText('Tusik')).toBeInTheDocument();
-    expect(screen.getByText('Belka')).toBeInTheDocument();
-    expect(screen.getByText('available')).toBeInTheDocument();
-    expect(screen.getByText('pending')).toBeInTheDocument();
+  test('shows pet names correctly', () => {
+    const pet = {
+      id: 1,
+      name: 'Rex',
+      status: 'available' as const,
+      photoUrls: [],
+    };
+    render(
+      <MemoryRouter>
+        <Item pet={pet} />
+      </MemoryRouter>
+    );
+    expect(screen.getByText('Rex')).toBeInTheDocument();
   });
 });

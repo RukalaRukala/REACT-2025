@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import Item from '../components/Results/components/Item';
+import { MemoryRouter } from 'react-router-dom';
 
 const testPet = {
   id: 1,
@@ -18,7 +19,11 @@ const petWithoutCategory = {
 
 describe('Item Tests', () => {
   it('shows pet info', () => {
-    render(<Item pet={testPet} />);
+    render(
+      <MemoryRouter>
+        <Item pet={testPet} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('Tusik')).toBeInTheDocument();
     expect(screen.getByText('available')).toBeInTheDocument();
@@ -27,7 +32,11 @@ describe('Item Tests', () => {
   });
 
   it('shows not specified when no category', () => {
-    render(<Item pet={petWithoutCategory} />);
+    render(
+      <MemoryRouter>
+        <Item pet={petWithoutCategory} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('Belka')).toBeInTheDocument();
     expect(screen.getByText('Not specified')).toBeInTheDocument();

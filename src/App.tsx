@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.scss';
 import { searchPetsByStatus } from './components/Search/Search.api.tsx';
 import type { Pet } from './components/Search/Search.model.tsx';
@@ -68,20 +68,18 @@ const App = () => {
   );
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={APP_ROUTES.ROOT} element={<Navigate to="/1" replace />} />
-        <Route
-          path={APP_ROUTES.PAGE}
-          element={<MainView state={state} handleSearch={handleSearch} />}
-        />
-        <Route
-          path={APP_ROUTES.DETAILS}
-          element={<MainView state={state} handleSearch={handleSearch} />}
-        />
-        <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path={APP_ROUTES.ROOT} element={<Navigate to="/1" replace />} />
+      <Route
+        path={APP_ROUTES.PAGE}
+        element={<MainView state={state} handleSearch={handleSearch} />}
+      />
+      <Route
+        path={APP_ROUTES.DETAILS}
+        element={<MainView state={state} handleSearch={handleSearch} />}
+      />
+      <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
+    </Routes>
   );
 };
 
