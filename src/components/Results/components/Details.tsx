@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { searchPetsByStatus } from '../../Search/Search.api';
 import { DETAILS_MESSAGES } from './Details.const';
 import type { Pet } from '../../Search/Search.model.tsx';
+import styles from './Details.module.scss';
 
 function Details({ id, onClose }: { id: string; onClose: () => void }) {
   const [pet, setPet] = useState<Pet | null>(null);
@@ -38,22 +39,31 @@ function Details({ id, onClose }: { id: string; onClose: () => void }) {
   if (!pet) return null;
 
   return (
-    <div>
-      <button onClick={onClose}>{DETAILS_MESSAGES.CLOSE}</button>
-      <h2>{DETAILS_MESSAGES.TITLE}</h2>
-      <div>
-        {DETAILS_MESSAGES.ID}: {pet.id}
+    <>
+      <div className={styles.detailsOverlay} onClick={onClose} />
+      <div className={styles.detailsPanel} onClick={(e) => e.stopPropagation()}>
+        <button
+          onClick={onClose}
+          aria-label="Close details"
+          className={styles.detailsClose}
+        >
+          ×
+        </button>
+        <h2>{DETAILS_MESSAGES.TITLE}</h2>
+        <div>
+          {DETAILS_MESSAGES.ID}: {pet.id}
+        </div>
+        <div>
+          {DETAILS_MESSAGES.NAME}: {pet.name}
+        </div>
+        <div>
+          {DETAILS_MESSAGES.STATUS}: {pet.status}
+        </div>
+        <div>
+          {DETAILS_MESSAGES.CATEGORY}: {pet.category && pet.category.name}
+        </div>
       </div>
-      <div>
-        {DETAILS_MESSAGES.NAME}: {pet.name}
-      </div>
-      <div>
-        {DETAILS_MESSAGES.STATUS}: {pet.status}
-      </div>
-      <div>
-        {DETAILS_MESSAGES.CATEGORY}: {pet.category && pet.category.name}
-      </div>
-    </div>
+    </>
   );
 }
 

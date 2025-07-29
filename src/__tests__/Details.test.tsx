@@ -85,7 +85,7 @@ describe('Details Tests', () => {
       expect(screen.getByText('Pet Details')).toBeInTheDocument();
     });
 
-    const closeButton = screen.getByText('Close');
+    const closeButton = screen.getByRole('button', { name: /close details/i });
     await userEvent.click(closeButton);
 
     expect(mockOnClose).toHaveBeenCalled();

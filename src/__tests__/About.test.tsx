@@ -13,7 +13,7 @@ describe('About page', () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute(
       'href',
-      expect.stringContaining('rs.school/react')
+      expect.stringContaining('https://rs.school/courses/reactjs')
     );
   });
 });

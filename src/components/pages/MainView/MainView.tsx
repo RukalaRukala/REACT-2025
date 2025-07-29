@@ -2,7 +2,13 @@ import { APP_ROUTES, APP_TITLES } from '../../../App.const';
 import Details from '../../Results/components/Details';
 import Results from '../../Results/Results';
 import Search from '../../Search/Search';
-import { useParams, Navigate, useSearchParams, Link } from 'react-router-dom';
+import {
+  useParams,
+  Navigate,
+  useSearchParams,
+  Link,
+  useNavigate,
+} from 'react-router-dom';
 import styles from './MainView.module.scss';
 import type { Pet } from '../../Search/Search.model.tsx';
 
@@ -18,15 +24,16 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParam = searchParams.get('page');
   const pageNum = pageParam ? parseInt(pageParam, 10) : 1;
-  const detailsId = useParams().detailsId;
+  const { page, detailsId } = useParams();
+  const navigate = useNavigate();
 
   if (pageParam && (isNaN(pageNum) || pageNum < 1)) {
     return <Navigate to={APP_ROUTES.NOT_FOUND} replace />;
   }
 
   const handleCloseDetails = () => {
-    searchParams.delete('detailsId');
-    setSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams);
+    navigate({ pathname: `/${page || pageNum}`, search: params.toString() });
   };
 
   const handlePageChange = (newPage: number) => {
