@@ -2,7 +2,7 @@ import { APP_ROUTES, APP_TITLES } from '../../../App.const';
 import Details from '../../Results/components/Details';
 import Results from '../../Results/Results';
 import Search from '../../Search/Search';
-import { useParams, Navigate, useSearchParams } from 'react-router-dom';
+import { useParams, Navigate, useSearchParams, Link } from 'react-router-dom';
 import styles from './MainView.module.scss';
 import type { Pet } from '../../Search/Search.model.tsx';
 
@@ -36,6 +36,11 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
 
   return (
     <div className={styles.mainView}>
+      <nav className={styles.mainView__nav}>
+        <Link to="/about" className={styles.mainView__link}>
+          About
+        </Link>
+      </nav>
       <div
         className={
           detailsId

@@ -62,3 +62,17 @@
   padding: toRem(32);
   text-align: center;
 }
+
+.mainView__nav {
+  margin-bottom: toRem(16);
+}
+
+.mainView__link {
+  color: $primary-color;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+  &:hover {
+    color: $primary-hover-color;
+  }
+}

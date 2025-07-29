@@ -6,6 +6,7 @@ import type { Pet } from './components/Search/Search.model.tsx';
 import { APP_MESSAGES, APP_ROUTES } from './App.const';
 import MainView from './components/pages/MainView/MainView.tsx';
 import NotFound from './components/pages/NotFound.tsx';
+import About from './components/pages/About';
 
 interface AppState {
   searchResults: Pet[];
@@ -79,6 +80,7 @@ const App = () => {
         element={<MainView state={state} handleSearch={handleSearch} />}
       />
       <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
+      <Route path={APP_ROUTES.ABOUT} element={<About />} />
     </Routes>
   );
 };

@@ -7,6 +7,7 @@ export const APP_ROUTES = {
   PAGE: ':page',
   DETAILS: ':page/:detailsId',
   NOT_FOUND: '/404',
+  ABOUT: '/about',
 };
 
 export const APP_TITLES = {
