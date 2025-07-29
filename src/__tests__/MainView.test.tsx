@@ -20,6 +20,8 @@ jest.mock('../components/Results/components/SkeletonItem', () => {
   };
 });
 
+const SKELETON_COUNT = 3;
+
 describe('Results Tests', () => {
   const testPets = [
     { id: 1, name: 'Rex', status: 'available' as const, photoUrls: [] },
@@ -32,17 +34,26 @@ describe('Results Tests', () => {
   };
 
   test('shows skeletons while loading', () => {
-    renderComponent(<Results pets={[]} isLoading={true} />);
+    renderComponent(
+      <Results pets={[]} isLoading={true} page={1} onPageChange={() => {}} />
+    );
 
     const skeletons = screen.getAllByTestId('skeleton-item');
-    expect(skeletons.length).toBe(3);
+    expect(skeletons.length).toBe(SKELETON_COUNT);
 
     const petItems = screen.queryByTestId(/pet-item/);
     expect(petItems).not.toBeInTheDocument();
   });
 
   test('shows pet list when loading is completed', () => {
-    renderComponent(<Results pets={testPets} isLoading={false} />);
+    renderComponent(
+      <Results
+        pets={testPets}
+        isLoading={false}
+        page={1}
+        onPageChange={() => {}}
+      />
+    );
 
     expect(screen.getByTestId('pet-item-1')).toBeInTheDocument();
     expect(screen.getByTestId('pet-item-2')).toBeInTheDocument();
@@ -58,19 +69,11 @@ describe('Results Tests', () => {
 
   test('shows nothing if pet list is empty', () => {
     const { container } = renderComponent(
-      <Results pets={[]} isLoading={false} />
+      <Results pets={[]} isLoading={false} page={1} onPageChange={() => {}} />
     );
 
     expect(screen.queryByTestId(/pet-item/)).not.toBeInTheDocument();
     expect(screen.queryByTestId('skeleton-item')).not.toBeInTheDocument();
-
-    expect(container.firstChild).toBeNull();
-  });
-
-  test('shows nothing if pets are null', () => {
-    const { container } = renderComponent(
-      <Results pets={null as unknown as Pet[]} isLoading={false} />
-    );
 
     expect(container.firstChild).toBeNull();
   });

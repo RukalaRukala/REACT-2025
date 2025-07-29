@@ -24,7 +24,12 @@ describe('Results Tests', () => {
   it('shows pets when data exists', () => {
     render(
       <MemoryRouter>
-        <Results pets={testPets} isLoading={false} />
+        <Results
+          pets={testPets}
+          isLoading={false}
+          page={1}
+          onPageChange={() => {}}
+        />
       </MemoryRouter>
     );
 
@@ -35,7 +40,7 @@ describe('Results Tests', () => {
   it('shows loading skeletons', () => {
     render(
       <MemoryRouter>
-        <Results pets={[]} isLoading={true} />
+        <Results pets={[]} isLoading={true} page={1} onPageChange={() => {}} />
       </MemoryRouter>
     );
 

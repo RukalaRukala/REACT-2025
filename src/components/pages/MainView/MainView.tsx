@@ -2,7 +2,7 @@ import { APP_ROUTES, APP_TITLES } from '../../../App.const';
 import Details from '../../Results/components/Details';
 import Results from '../../Results/Results';
 import Search from '../../Search/Search';
-import { useParams, useNavigate, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useSearchParams } from 'react-router-dom';
 import styles from './MainView.module.scss';
 import type { Pet } from '../../Search/Search.model.tsx';
 
@@ -15,16 +15,23 @@ interface MainViewProps {
 }
 
 const MainView = ({ state, handleSearch }: MainViewProps) => {
-  const { page, detailsId } = useParams();
-  const navigate = useNavigate();
-  const pageNum = page ? parseInt(page, 10) : 1;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = searchParams.get('page');
+  const pageNum = pageParam ? parseInt(pageParam, 10) : 1;
+  const detailsId = useParams().detailsId;
 
-  if (page && (isNaN(pageNum) || pageNum < 1)) {
+  if (pageParam && (isNaN(pageNum) || pageNum < 1)) {
     return <Navigate to={APP_ROUTES.NOT_FOUND} replace />;
   }
 
   const handleCloseDetails = () => {
-    navigate(`/${pageNum}`);
+    searchParams.delete('detailsId');
+    setSearchParams(searchParams);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    searchParams.set('page', newPage.toString());
+    setSearchParams(searchParams);
   };
 
   return (
@@ -41,7 +48,12 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
           <p className={styles.appSubtitle}>{APP_TITLES.SUBTITLE}</p>
         </header>
         <Search onSearch={handleSearch} />
-        <Results pets={state.searchResults} isLoading={state.isLoading} />
+        <Results
+          pets={state.searchResults}
+          isLoading={state.isLoading}
+          page={pageNum}
+          onPageChange={handlePageChange}
+        />
       </div>
       {detailsId && (
         <div className={styles.mainView__right}>
