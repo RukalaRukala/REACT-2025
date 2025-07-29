@@ -1,6 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
-import TestErrorButton from '../components/ErrorBoundary/TestErrorButton';
 
 const mockConsole = jest.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -49,18 +48,5 @@ describe('ErrorBoundary Tests', () => {
     );
 
     expect(screen.getByText('Good component')).toBeInTheDocument();
-  });
-
-  it('test button throws error', () => {
-    render(
-      <ErrorBoundary>
-        <TestErrorButton />
-      </ErrorBoundary>
-    );
-
-    const button = screen.getByText('Test Error Boundary');
-    fireEvent.click(button);
-
-    expect(screen.getByText('Oops! Something went wrong')).toBeInTheDocument();
   });
 });

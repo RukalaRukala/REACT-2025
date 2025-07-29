@@ -2,7 +2,6 @@ import { APP_ROUTES, APP_TITLES } from '../../../App.const';
 import Details from '../../Results/components/Details';
 import Results from '../../Results/Results';
 import Search from '../../Search/Search';
-import TestErrorButton from '../../ErrorBoundary/TestErrorButton';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import styles from './MainView.module.scss';
 import type { Pet } from '../../Search/Search.model.tsx';
@@ -40,7 +39,6 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
         <header className={styles.appHeader}>
           <h1 className={styles.appTitle}>{APP_TITLES.MAIN_TITLE}</h1>
           <p className={styles.appSubtitle}>{APP_TITLES.SUBTITLE}</p>
-          <TestErrorButton />
         </header>
         <Search onSearch={handleSearch} />
         <Results pets={state.searchResults} isLoading={state.isLoading} />
