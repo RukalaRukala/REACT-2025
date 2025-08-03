@@ -34,14 +34,54 @@ function Details({ id, onClose }: { id: string; onClose: () => void }) {
       });
   }, [id]);
 
-  if (loading) return <div>{DETAILS_MESSAGES.LOADING}</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) {
+    return (
+      <>
+        <div className={styles.detailsOverlay} />
+        <div className={styles.detailsPanel}>
+          <button
+            onClick={onClose}
+            aria-label="Close details"
+            className={styles.detailsClose}
+          >
+            ×
+          </button>
+          <div className={styles.loadingContainer}>
+            <div className={styles.loadingSpinner}></div>
+            <div className={styles.loadingText}>{DETAILS_MESSAGES.LOADING}</div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <div className={styles.detailsOverlay} />
+        <div className={styles.detailsPanel}>
+          <button
+            onClick={onClose}
+            aria-label="Close details"
+            className={styles.detailsClose}
+          >
+            ×
+          </button>
+          <div className={styles.errorContainer}>
+            <div className={styles.errorIcon}>⚠️</div>
+            <div className={styles.errorText}>{error}</div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   if (!pet) return null;
 
   return (
     <>
-      <div className={styles.detailsOverlay} onClick={onClose} />
-      <div className={styles.detailsPanel} onClick={(e) => e.stopPropagation()}>
+      <div className={styles.detailsOverlay} />
+      <div className={styles.detailsPanel}>
         <button
           onClick={onClose}
           aria-label="Close details"

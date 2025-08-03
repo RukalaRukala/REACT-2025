@@ -48,13 +48,7 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
           About
         </Link>
       </nav>
-      <div
-        className={
-          detailsId
-            ? `${styles.mainView__left} ${styles['mainView__left--with-details']}`
-            : styles.mainView__left
-        }
-      >
+      <div className={styles.mainView__content}>
         <header className={styles.appHeader}>
           <h1 className={styles.appTitle}>{APP_TITLES.MAIN_TITLE}</h1>
           <p className={styles.appSubtitle}>{APP_TITLES.SUBTITLE}</p>
@@ -67,11 +61,7 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
           onPageChange={handlePageChange}
         />
       </div>
-      {detailsId && (
-        <div className={styles.mainView__right}>
-          <Details id={detailsId} onClose={handleCloseDetails} />
-        </div>
-      )}
+      {detailsId && <Details id={detailsId} onClose={handleCloseDetails} />}
     </div>
   );
 };

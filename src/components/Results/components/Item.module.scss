@@ -1,31 +1,43 @@
 @use '../../../styles/functions.scss' as *;
-@use '../../../styles/colors.scss' as *;
 
 .item {
   display: block;
   text-decoration: none;
   color: inherit;
-  background: $card-bg;
-  border: toRem(1) solid $card-border;
+  background-color: var(--card-bg);
+  border: toRem(1) solid var(--card-border);
   border-radius: toRem(8);
   padding: toRem(12);
   margin-bottom: toRem(8);
-  box-shadow: 0 toRem(1) toRem(2) $card-shadow;
+  box-shadow: 0 toRem(1) toRem(2) var(--card-shadow);
   transition: all 0.15s;
   position: relative;
   overflow: hidden;
   outline: none;
+
+  [data-theme='dark'] & {
+    background: linear-gradient(135deg, #2d3748 0%, #2a3441 100%);
+    border-color: #4a5568;
+    box-shadow: 0 toRem(2) toRem(8) rgba(0, 0, 0, 0.4);
+
+    &:hover {
+      background: linear-gradient(135deg, #374151 0%, #334155 100%);
+      border-color: var(--primary-color);
+      box-shadow: 0 toRem(8) toRem(25) rgba(0, 0, 0, 0.5);
+      transform: translateY(toRem(-2));
+    }
+  }
 }
 
 .item:focus {
-  outline: toRem(2) solid $blue-primary;
+  outline: toRem(2) solid var(--primary-color);
   outline-offset: toRem(2);
 }
 
 .item:hover {
-  box-shadow: 0 toRem(4) toRem(12) $card-shadow-hover;
+  box-shadow: 0 toRem(4) toRem(12) var(--card-shadow-hover);
   transform: translateY(toRem(-1));
-  border-color: $blue-primary;
+  border-color: var(--primary-color);
   text-decoration: none;
 }
 
@@ -46,20 +58,38 @@
 
 .status.available {
   background-color: rgba(16, 185, 129, 0.1);
-  color: $status-available;
+  color: #10b981;
   border: toRem(1) solid rgba(16, 185, 129, 0.2);
+
+  [data-theme='dark'] & {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border-color: rgba(16, 185, 129, 0.3);
+  }
 }
 
 .status.pending {
   background-color: rgba(245, 158, 11, 0.1);
-  color: $status-pending;
+  color: #f59e0b;
   border: toRem(1) solid rgba(245, 158, 11, 0.2);
+
+  [data-theme='dark'] & {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    border-color: rgba(245, 158, 11, 0.3);
+  }
 }
 
 .status.sold {
   background-color: rgba(239, 68, 68, 0.1);
-  color: $status-sold;
+  color: #ef4444;
   border: toRem(1) solid rgba(239, 68, 68, 0.2);
+
+  [data-theme='dark'] & {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.3);
+  }
 }
 
 .field {
@@ -70,11 +100,11 @@
 }
 
 .field-label {
-  color: $text-secondary;
+  color: var(--text-secondary);
   min-width: toRem(60);
 }
 
 .field-value {
-  color: $text-primary;
+  color: var(--text-primary);
   font-weight: 500;
 }

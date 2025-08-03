@@ -1,41 +1,36 @@
 @use '../../../styles/functions.scss' as *;
-@use '../../../styles/colors.scss' as *;
 
 .mainView {
   display: flex;
-  gap: toRem(24);
-  height: 100vh;
-  align-items: flex-start;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: toRem(1200);
+  margin: 0 auto;
+  padding: toRem(16);
 }
 
-.mainView__left {
-  flex: 1 1 0;
-  min-width: 0;
-  overflow-y: auto;
-  height: 100vh;
+.mainView__content {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
 }
 
-.mainView__left--with-details {
-  max-width: 50%;
+.mainView__nav {
+  margin-bottom: toRem(16);
+  align-self: flex-end;
 }
 
-.mainView__right {
-  flex: 0 0 toRem(400);
-  min-width: toRem(320);
-  max-width: toRem(500);
-  border-left: 1px solid $mainView-border-color;
-  padding-left: toRem(24);
-  background: $mainView-bg;
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  align-self: flex-start;
-  overflow: auto;
-  box-sizing: border-box;
+.mainView__link {
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--primary-hover-color);
+  }
 }
 
 .appHeader {
@@ -47,13 +42,13 @@
 .appTitle {
   font-size: toRem(32);
   font-weight: 700;
-  color: $mainView-title-color;
+  color: var(--heading-color);
   margin: 0 0 toRem(8) 0;
 }
 
 .appSubtitle {
   font-size: toRem(18);
-  color: $mainView-subtitle-color;
+  color: var(--subheading-color);
   margin: 0;
   font-weight: 400;
 }
@@ -61,18 +56,4 @@
 .notFound {
   padding: toRem(32);
   text-align: center;
-}
-
-.mainView__nav {
-  margin-bottom: toRem(16);
-}
-
-.mainView__link {
-  color: $primary-color;
-  text-decoration: underline;
-  font-weight: 500;
-  transition: color 0.2s;
-  &:hover {
-    color: $primary-hover-color;
-  }
 }
