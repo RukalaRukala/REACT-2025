@@ -1,6 +1,23 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import Item from '../components/Results/components/Item';
-import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import selectedItemsReducer from '../store/selectedItemsSlice';
+
+const mockStore = configureStore({
+  reducer: {
+    selectedItems: selectedItemsReducer,
+  },
+});
+
+const renderWithProviders = (component: React.ReactElement) => {
+  return render(
+    <Provider store={mockStore}>
+      <BrowserRouter>{component}</BrowserRouter>
+    </Provider>
+  );
+};
 
 const testPet = {
   id: 1,
@@ -19,11 +36,7 @@ const petWithoutCategory = {
 
 describe('Item Tests', () => {
   it('shows pet info', () => {
-    render(
-      <MemoryRouter>
-        <Item pet={testPet} />
-      </MemoryRouter>
-    );
+    renderWithProviders(<Item pet={testPet} />);
 
     expect(screen.getByText('Tusik')).toBeInTheDocument();
     expect(screen.getByText('available')).toBeInTheDocument();
@@ -32,11 +45,7 @@ describe('Item Tests', () => {
   });
 
   it('shows not specified when no category', () => {
-    render(
-      <MemoryRouter>
-        <Item pet={petWithoutCategory} />
-      </MemoryRouter>
-    );
+    renderWithProviders(<Item pet={petWithoutCategory} />);
 
     expect(screen.getByText('Belka')).toBeInTheDocument();
     expect(screen.getByText('Not specified')).toBeInTheDocument();

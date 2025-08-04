@@ -3,6 +3,9 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { searchPetsByStatus } from '../components/Search/Search.api';
 import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import selectedItemsReducer from '../store/selectedItemsSlice';
 
 jest.mock('../components/Search/Search.api');
 const mockSearchApi = searchPetsByStatus as jest.MockedFunction<
@@ -37,6 +40,16 @@ const testPets = [
   },
 ];
 
+const mockStore = configureStore({
+  reducer: {
+    selectedItems: selectedItemsReducer,
+  },
+});
+
+const renderWithProviders = (component: React.ReactElement) => {
+  return render(<Provider store={mockStore}>{component}</Provider>);
+};
+
 describe('App Tests', () => {
   beforeEach(() => {
     mockSearchApi.mockClear();
@@ -59,7 +72,7 @@ describe('App Tests', () => {
       ),
     }));
 
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/1']}>
         <App />
       </MemoryRouter>
@@ -82,7 +95,7 @@ describe('App Tests', () => {
       ),
     }));
 
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/1']}>
         <App />
       </MemoryRouter>
@@ -118,7 +131,7 @@ describe('App Tests', () => {
       },
     }));
 
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/1']}>
         <App />
       </MemoryRouter>
@@ -151,7 +164,7 @@ describe('App Tests', () => {
       ),
     }));
 
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/1']}>
         <App />
       </MemoryRouter>
@@ -167,7 +180,7 @@ describe('App Tests', () => {
   });
 
   test('redirects from root path to first page', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/']}>
         <App />
       </MemoryRouter>

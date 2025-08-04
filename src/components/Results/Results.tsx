@@ -15,11 +15,18 @@ const PAGE_SIZE = 4;
 const SKELETON_COUNT = 3;
 
 const Results = ({ pets, isLoading, page, onPageChange }: ResultsProps) => {
-  const safePets = pets || [];
-  const totalPages = Math.ceil(safePets.length / PAGE_SIZE);
+  const uniquePets = pets.reduce((acc: Pet[], current) => {
+    const isDuplicate = acc.find((item) => item.id === current.id);
+    if (!isDuplicate) {
+      acc.push(current);
+    }
+    return acc;
+  }, []);
+
+  const totalPages = Math.ceil(uniquePets.length / PAGE_SIZE);
   const startIdx = (page - 1) * PAGE_SIZE;
   const endIdx = startIdx + PAGE_SIZE;
-  const petsToShow = safePets.slice(startIdx, endIdx);
+  const petsToShow = uniquePets.slice(startIdx, endIdx);
 
   const renderLoadingSkeletons = () => {
     return (
@@ -49,7 +56,7 @@ const Results = ({ pets, isLoading, page, onPageChange }: ResultsProps) => {
   };
 
   if (isLoading) return renderLoadingSkeletons();
-  if (!safePets.length) return null;
+  if (!uniquePets.length) return null;
 
   return renderPetsList();
 };

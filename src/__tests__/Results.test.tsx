@@ -1,7 +1,24 @@
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import Results from '../components/Results/Results';
-import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import selectedItemsReducer from '../store/selectedItemsSlice';
 import Item from '../components/Results/components/Item.tsx';
+
+const mockStore = configureStore({
+  reducer: {
+    selectedItems: selectedItemsReducer,
+  },
+});
+
+const renderWithProviders = (component: React.ReactElement) => {
+  return render(
+    <Provider store={mockStore}>
+      <BrowserRouter>{component}</BrowserRouter>
+    </Provider>
+  );
+};
 
 const testPets = [
   {
@@ -22,15 +39,13 @@ const testPets = [
 
 describe('Results Tests', () => {
   it('shows pets when data exists', () => {
-    render(
-      <MemoryRouter>
-        <Results
-          pets={testPets}
-          isLoading={false}
-          page={1}
-          onPageChange={() => {}}
-        />
-      </MemoryRouter>
+    renderWithProviders(
+      <Results
+        pets={testPets}
+        isLoading={false}
+        page={1}
+        onPageChange={() => {}}
+      />
     );
 
     expect(screen.getByText('Tusik')).toBeInTheDocument();
@@ -38,10 +53,8 @@ describe('Results Tests', () => {
   });
 
   it('shows loading skeletons', () => {
-    render(
-      <MemoryRouter>
-        <Results pets={[]} isLoading={true} page={1} onPageChange={() => {}} />
-      </MemoryRouter>
+    renderWithProviders(
+      <Results pets={[]} isLoading={true} page={1} onPageChange={() => {}} />
     );
 
     const skeletons = screen.getAllByTestId('skeleton-item');
@@ -55,11 +68,8 @@ describe('Results Tests', () => {
       status: 'available' as const,
       photoUrls: [],
     };
-    render(
-      <MemoryRouter>
-        <Item pet={pet} />
-      </MemoryRouter>
-    );
+    renderWithProviders(<Item pet={pet} />);
+
     expect(screen.getByText('Rex')).toBeInTheDocument();
   });
 });
