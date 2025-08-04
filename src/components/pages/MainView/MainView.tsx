@@ -44,7 +44,7 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
   return (
     <div className={styles.mainView}>
       <nav className={styles.mainView__nav}>
-        <Link to="/about" className={styles.mainView__link}>
+        <Link to={APP_ROUTES.ABOUT} className={styles.mainView__link}>
           About
         </Link>
       </nav>
