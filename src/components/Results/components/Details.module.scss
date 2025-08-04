@@ -1,0 +1,104 @@
+@use '../../../styles/functions.scss' as *;
+
+.detailsOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.detailsPanel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: toRem(400);
+  z-index: 1001;
+  background: var(--card-bg);
+  padding: toRem(16);
+  box-shadow: 0 0 toRem(16) var(--card-shadow-hover);
+  color: var(--text-primary);
+  pointer-events: auto;
+}
+
+.detailsClose {
+  position: absolute;
+  top: toRem(8);
+  right: toRem(8);
+  background: none;
+  border: none;
+  font-size: toRem(24);
+  cursor: pointer;
+  line-height: 1;
+  color: var(--text-primary);
+  border-radius: toRem(4);
+  padding: toRem(4);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--gray-light);
+  }
+
+  &:focus {
+    outline: toRem(2) solid var(--primary-color);
+    outline-offset: toRem(2);
+  }
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: toRem(60) toRem(20);
+  text-align: center;
+}
+
+.loadingSpinner {
+  width: toRem(40);
+  height: toRem(40);
+  border: toRem(4) solid var(--gray-light);
+  border-top: toRem(4) solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: toRem(16);
+}
+
+.loadingText {
+  color: var(--text-primary);
+  font-size: toRem(16);
+  font-weight: 500;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: toRem(60) toRem(20);
+  text-align: center;
+}
+
+.errorIcon {
+  font-size: toRem(48);
+  margin-bottom: toRem(16);
+}
+
+.errorText {
+  color: var(--text-primary);
+  font-size: toRem(16);
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

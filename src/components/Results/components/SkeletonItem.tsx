@@ -1,0 +1,28 @@
+import Skeleton from '../../Skeleton/Skeleton.tsx';
+import styles from './SkeletonItem.module.scss';
+
+const SkeletonItem = () => {
+  return (
+    <div className={styles.skeletonItem} data-testid="skeleton-item">
+      <div className={styles.imageContainer}>
+        <Skeleton className={styles.imageSkeleton} />
+      </div>
+
+      <div className={styles.content}>
+        <Skeleton className={styles.nameSkeleton} />
+
+        <div className={styles.details}>
+          <Skeleton className={styles.statusSkeleton} />
+          <Skeleton className={styles.categorySkeleton} />
+        </div>
+
+        <div className={styles.tags}>
+          <Skeleton className={styles.tagSkeleton} />
+          <Skeleton className={styles.tagSkeleton} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SkeletonItem;

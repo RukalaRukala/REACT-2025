@@ -1,0 +1,67 @@
+@use '../../../styles/functions.scss' as *;
+
+.mainView {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: toRem(16);
+  transition: margin-left 0.3s ease;
+
+  &--withFlyout {
+    margin-left: toRem(300);
+  }
+
+  @media (max-width: 1200px) {
+    max-width: 100%;
+  }
+}
+
+.mainView__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.mainView__nav {
+  margin-bottom: toRem(16);
+  align-self: flex-end;
+}
+
+.mainView__link {
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--primary-hover-color);
+  }
+}
+
+.appHeader {
+  text-align: center;
+  margin-bottom: toRem(24);
+  width: 100%;
+}
+
+.appTitle {
+  font-size: toRem(32);
+  font-weight: 700;
+  color: var(--heading-color);
+  margin: 0 0 toRem(8) 0;
+}
+
+.appSubtitle {
+  font-size: toRem(18);
+  color: var(--subheading-color);
+  margin: 0;
+  font-weight: 400;
+}
+
+.notFound {
+  padding: toRem(32);
+  text-align: center;
+}

@@ -1,0 +1,48 @@
+@use '../../../styles/functions.scss' as *;
+@use '../../../styles/colors.scss' as *;
+
+.hint {
+  display: flex;
+  align-items: flex-start;
+  gap: toRem(12);
+  background: $notification-bg;
+  border: toRem(1) solid $notification-border;
+  border-radius: toRem(8);
+  padding: toRem(16);
+  margin-top: toRem(16);
+}
+
+.icon {
+  font-size: toRem(20);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  margin: 0 0 toRem(8) 0;
+  font-size: toRem(14);
+  font-weight: 600;
+  color: $notification-text;
+}
+
+.statuses {
+  display: flex;
+  flex-direction: column;
+  gap: toRem(8);
+}
+
+.status {
+  margin: auto;
+  background: $white;
+  border: toRem(1) solid $notification-border;
+  border-radius: toRem(16);
+  padding: toRem(4) toRem(12);
+  font-size: toRem(12);
+  font-weight: 500;
+  color: $notification-text;
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+}

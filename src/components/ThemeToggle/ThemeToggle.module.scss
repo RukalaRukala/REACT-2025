@@ -1,0 +1,132 @@
+@use '../../styles/functions.scss' as *;
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  gap: toRem(10);
+  margin-bottom: toRem(20);
+}
+
+.toggleLabel {
+  display: flex;
+  align-items: center;
+  gap: toRem(12);
+  cursor: pointer;
+  font-size: toRem(14);
+  font-weight: 500;
+}
+
+.themeText {
+  color: var(--text-primary);
+  white-space: nowrap;
+  font-size: toRem(14);
+}
+
+.toggleContainer {
+  position: relative;
+  display: inline-block;
+  width: toRem(60);
+  height: toRem(30);
+}
+
+.toggleInput {
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  &:checked + .toggleSlider {
+    background-color: var(--primary-color);
+  }
+
+  &:checked + .toggleSlider:before {
+    transform: translateX(toRem(30));
+  }
+
+  &:focus + .toggleSlider {
+    box-shadow: 0 0 0 toRem(2) var(--focus-ring);
+  }
+}
+
+.toggleSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-medium);
+  border-radius: toRem(30);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 toRem(4);
+
+  &:before {
+    position: absolute;
+    content: '';
+    height: toRem(22);
+    width: toRem(22);
+    left: toRem(4);
+    bottom: toRem(4);
+    background-color: var(--card-bg);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 toRem(2) toRem(4) var(--shadow-light);
+  }
+}
+
+.toggleIcon {
+  font-size: toRem(12);
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: toRem(22);
+  height: toRem(22);
+}
+
+.themeValue {
+  color: var(--text-secondary);
+  font-size: toRem(13);
+  min-width: toRem(40);
+}
+
+.themeButton {
+  padding: toRem(8) toRem(16);
+  border: toRem(2) solid var(--card-border);
+  border-radius: toRem(8);
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: toRem(14);
+  transition: all 0.3s ease;
+  font-family: inherit;
+
+  &:hover {
+    background-color: var(--gray-light);
+    border-color: var(--primary-color);
+    transform: translateY(toRem(-1));
+  }
+
+  &:focus {
+    outline: toRem(2) solid var(--focus-ring);
+    outline-offset: toRem(2);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.dark {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+
+    &:hover {
+      background-color: var(--primary-hover-color);
+      border-color: var(--primary-hover-color);
+    }
+  }
+}
