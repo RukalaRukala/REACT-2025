@@ -108,3 +108,39 @@
   color: var(--text-primary);
   font-weight: 500;
 }
+
+.itemWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: toRem(8);
+  margin-bottom: toRem(8);
+}
+
+.checkboxWrapper {
+  display: flex;
+  align-items: center;
+  padding: toRem(4);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.checkbox {
+  width: toRem(18);
+  height: toRem(18);
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.item.selected {
+  border-color: var(--primary-color);
+  background-color: var(--card-bg-selected, rgba(59, 130, 246, 0.05));
+
+  [data-theme='dark'] & {
+    background: linear-gradient(
+      135deg,
+      rgba(59, 130, 246, 0.1) 0%,
+      rgba(37, 99, 235, 0.1) 100%
+    );
+    border-color: var(--primary-color);
+  }
+}

@@ -1,12 +1,20 @@
 @use '../../../styles/functions.scss' as *;
 
 .mainView {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  max-width: toRem(1200);
-  margin: 0 auto;
   padding: toRem(16);
+  transition: margin-left 0.3s ease;
+
+  &--withFlyout {
+    margin-left: toRem(300);
+  }
+
+  @media (max-width: 1200px) {
+    max-width: 100%;
+  }
 }
 
 .mainView__content {

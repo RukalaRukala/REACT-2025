@@ -2,6 +2,7 @@ import { APP_ROUTES, APP_TITLES } from '../../../App.const';
 import Details from '../../Results/components/Details';
 import Results from '../../Results/Results';
 import Search from '../../Search/Search';
+import Flyout from '../../Flyout/Flyout';
 import {
   useParams,
   Navigate,
@@ -11,6 +12,7 @@ import {
 } from 'react-router-dom';
 import styles from './MainView.module.scss';
 import type { Pet } from '../../Search/Search.model.tsx';
+import { useAppSelector } from '../../../store/hooks';
 
 interface MainViewProps {
   state: {
@@ -21,6 +23,9 @@ interface MainViewProps {
 }
 
 const MainView = ({ state, handleSearch }: MainViewProps) => {
+  const selectedPets = useAppSelector(
+    (state) => state.selectedItems.selectedPets
+  );
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParam = searchParams.get('page');
   const pageNum = pageParam ? parseInt(pageParam, 10) : 1;
@@ -42,7 +47,9 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
   };
 
   return (
-    <div className={styles.mainView}>
+    <div
+      className={`${styles.mainView} ${selectedPets.length > 0 ? styles['mainView--withFlyout'] : ''}`}
+    >
       <nav className={styles.mainView__nav}>
         <Link to={APP_ROUTES.ABOUT} className={styles.mainView__link}>
           About
@@ -62,6 +69,7 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
         />
       </div>
       {detailsId && <Details id={detailsId} onClose={handleCloseDetails} />}
+      <Flyout />
     </div>
   );
 };
