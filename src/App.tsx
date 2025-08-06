@@ -65,10 +65,6 @@ class App extends Component<Record<string, never>, AppState> {
     }
   };
 
-  hasError = (): boolean => {
-    return this.state.searchError !== null;
-  };
-
   render() {
     return (
       <div className="app">

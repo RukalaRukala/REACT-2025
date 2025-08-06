@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Search from '../components/Search/Search';
-import { STORAGE_KEY } from '../components/Search/Search.const';
+import { STORAGE_KEYS } from '../constants';
 
 const mockConsole = jest.spyOn(console, 'warn').mockImplementation(() => {});
 
@@ -26,7 +26,7 @@ describe('Search Tests', () => {
   });
 
   it('loads saved search from storage', () => {
-    localStorage.setItem(STORAGE_KEY, 'available');
+    localStorage.setItem(STORAGE_KEYS.SEARCH_QUERY, 'available');
     render(<Search onSearch={mockSearch} />);
 
     expect(screen.getByDisplayValue('available')).toBeInTheDocument();
@@ -63,7 +63,7 @@ describe('Search Tests', () => {
     await user.type(input, 'available');
 
     await waitFor(() => {
-      expect(localStorage.getItem(STORAGE_KEY)).toBe('available');
+      expect(localStorage.getItem(STORAGE_KEYS.SEARCH_QUERY)).toBe('available');
     });
   });
 });
