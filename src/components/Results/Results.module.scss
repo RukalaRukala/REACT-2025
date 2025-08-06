@@ -1,0 +1,25 @@
+@use '../../styles/functions.scss' as *;
+@use '../../styles/colors.scss' as *;
+
+.results {
+  width: 100%;
+}
+
+.noResults {
+  text-align: center;
+  padding: toRem(48) toRem(24);
+  background: $card-bg;
+  border: toRem(1) solid $card-border;
+  border-radius: toRem(12);
+  color: $text-secondary;
+  font-size: toRem(16);
+  box-shadow: 0 toRem(2) toRem(4) $card-shadow;
+}
+
+.noResults::before {
+  content: '🔍';
+  display: block;
+  font-size: toRem(48);
+  margin-bottom: toRem(16);
+  opacity: 0.5;
+}

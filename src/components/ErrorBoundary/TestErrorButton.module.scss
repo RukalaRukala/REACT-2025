@@ -1,0 +1,17 @@
+.testErrorButton {
+  padding: 8px 16px;
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 16px;
+
+  &:hover {
+    background-color: #b91c1c;
+  }
+
+  &:active {
+    background-color: #991b1b;
+  }
+}
