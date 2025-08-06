@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import { searchPetsByStatus } from '../components/Search/Search.api';
+import { APP_ROUTES } from '../App.const';
 import { MemoryRouter } from 'react-router-dom';
 
 jest.mock('../components/Search/Search.api');
@@ -168,11 +169,21 @@ describe('App Tests', () => {
 
   test('redirects from root path to first page', () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={[APP_ROUTES.ROOT]}>
         <App />
       </MemoryRouter>
     );
 
     expect(screen.getByText('Pet Store Search')).toBeInTheDocument();
+  });
+
+  test('renders About page', () => {
+    render(
+      <MemoryRouter initialEntries={[APP_ROUTES.ABOUT]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText(/author/i)).toBeInTheDocument();
   });
 });

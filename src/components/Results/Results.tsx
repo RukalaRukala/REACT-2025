@@ -1,27 +1,29 @@
-import Item from './components/Item.tsx';
-import SkeletonItem from './components/SkeletonItem.tsx';
-import Pagination from './components/Pagination';
 import styles from './Results.module.scss';
+import Item from './components/Item';
+import Pagination from './components/Pagination';
 import type { Pet } from '../Search/Search.model.tsx';
+import SkeletonItem from './components/SkeletonItem.tsx';
 
 interface ResultsProps {
   pets: Pet[];
   isLoading: boolean;
   page: number;
+  totalPages: number;
   onPageChange: (page: number) => void;
 }
 
-const PAGE_SIZE = 4;
-const SKELETON_COUNT = 3;
+const SKELETON_COUNT = 4;
 
-const Results = ({ pets, isLoading, page, onPageChange }: ResultsProps) => {
-  const safePets = pets || [];
-  const totalPages = Math.ceil(safePets.length / PAGE_SIZE);
-  const startIdx = (page - 1) * PAGE_SIZE;
-  const endIdx = startIdx + PAGE_SIZE;
-  const petsToShow = safePets.slice(startIdx, endIdx);
+const Results = ({
+  pets = [],
+  isLoading,
+  page,
+  totalPages,
+  onPageChange,
+}: ResultsProps) => {
+  const safePets = Array.isArray(pets) ? pets : [];
 
-  const renderLoadingSkeletons = () => {
+  if (isLoading) {
     return (
       <div className={styles.results}>
         {Array.from({ length: SKELETON_COUNT }).map((_, idx) => (
@@ -29,29 +31,26 @@ const Results = ({ pets, isLoading, page, onPageChange }: ResultsProps) => {
         ))}
       </div>
     );
-  };
+  }
 
-  const renderPetsList = () => {
-    return (
-      <>
-        <div className={styles.results}>
-          {petsToShow.map((pet, index) => (
-            <Item key={`${pet.id}-${index}`} pet={pet} />
-          ))}
-        </div>
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-        />
-      </>
-    );
-  };
+  if (!safePets.length) {
+    return null;
+  }
 
-  if (isLoading) return renderLoadingSkeletons();
-  if (!safePets.length) return null;
-
-  return renderPetsList();
+  return (
+    <>
+      <div className={styles.results}>
+        {safePets.map((pet, index) => (
+          <Item key={`${pet.id}-${index}`} pet={pet} />
+        ))}
+      </div>
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+      />
+    </>
+  );
 };
 
 export default Results;

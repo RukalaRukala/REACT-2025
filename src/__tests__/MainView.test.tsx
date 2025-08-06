@@ -20,7 +20,7 @@ jest.mock('../components/Results/components/SkeletonItem', () => {
   };
 });
 
-const SKELETON_COUNT = 3;
+const SKELETON_COUNT = 4;
 
 describe('Results Tests', () => {
   const testPets = [
@@ -35,7 +35,13 @@ describe('Results Tests', () => {
 
   test('shows skeletons while loading', () => {
     renderComponent(
-      <Results pets={[]} isLoading={true} page={1} onPageChange={() => {}} />
+      <Results
+        pets={[]}
+        isLoading={true}
+        page={1}
+        totalPages={1}
+        onPageChange={() => {}}
+      />
     );
 
     const skeletons = screen.getAllByTestId('skeleton-item');
@@ -51,6 +57,7 @@ describe('Results Tests', () => {
         pets={testPets}
         isLoading={false}
         page={1}
+        totalPages={1}
         onPageChange={() => {}}
       />
     );
@@ -69,7 +76,13 @@ describe('Results Tests', () => {
 
   test('shows nothing if pet list is empty', () => {
     const { container } = renderComponent(
-      <Results pets={[]} isLoading={false} page={1} onPageChange={() => {}} />
+      <Results
+        pets={[]}
+        isLoading={false}
+        page={1}
+        totalPages={1}
+        onPageChange={() => {}}
+      />
     );
 
     expect(screen.queryByTestId(/pet-item/)).not.toBeInTheDocument();

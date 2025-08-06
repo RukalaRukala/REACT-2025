@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from '../Results.module.scss';
 
 interface PaginationProps {
@@ -7,11 +6,11 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
-}) => {
+}: PaginationProps) => {
   if (totalPages <= 1) return null;
 
   const handleClick = (page: number) => {

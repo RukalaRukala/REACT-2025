@@ -26,10 +26,11 @@ function Details({ id, onClose }: { id: string; onClose: () => void }) {
         } else {
           setError(DETAILS_MESSAGES.NOT_FOUND);
         }
-        setLoading(false);
       })
       .catch(() => {
         setError(DETAILS_MESSAGES.ERROR);
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, [id]);

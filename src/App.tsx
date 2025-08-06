@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.scss';
 import { searchPetsByStatus } from './components/Search/Search.api.tsx';
@@ -23,7 +23,7 @@ const App = () => {
     searchError: null,
   });
 
-  const handleSearchError = useCallback((error: unknown): void => {
+  const handleSearchError = (error: unknown): void => {
     console.error('Search error:', error);
 
     let errorMessage: string = APP_MESSAGES.NOT_FOUND;
@@ -40,37 +40,36 @@ const App = () => {
       searchResults: [],
       isLoading: false,
     }));
-  }, []);
+  };
 
-  const handleSearch = useCallback(
-    async (query: string): Promise<void> => {
+  const handleSearch = async (query: string): Promise<void> => {
+    setState((prevState) => ({
+      ...prevState,
+      isLoading: true,
+      hasSearched: true,
+      searchError: null,
+      searchResults: [],
+    }));
+
+    try {
+      const results = await searchPetsByStatus(query);
+
       setState((prevState) => ({
         ...prevState,
-        isLoading: true,
-        hasSearched: true,
+        searchResults: results,
+        isLoading: false,
         searchError: null,
-        searchResults: [],
       }));
-
-      try {
-        const results = await searchPetsByStatus(query);
-
-        setState((prevState) => ({
-          ...prevState,
-          searchResults: results,
-          isLoading: false,
-          searchError: null,
-        }));
-      } catch (error) {
-        handleSearchError(error);
-      }
-    },
-    [handleSearchError]
-  );
+    } catch (error) {
+      handleSearchError(error);
+    }
+  };
 
   return (
     <Routes>
       <Route path={APP_ROUTES.ROOT} element={<Navigate to="/1" replace />} />
+      <Route path={APP_ROUTES.ABOUT} element={<About />} />
+      <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
       <Route
         path={APP_ROUTES.PAGE}
         element={<MainView state={state} handleSearch={handleSearch} />}
@@ -79,8 +78,7 @@ const App = () => {
         path={APP_ROUTES.DETAILS}
         element={<MainView state={state} handleSearch={handleSearch} />}
       />
-      <Route path={APP_ROUTES.NOT_FOUND} element={<NotFound />} />
-      <Route path={APP_ROUTES.ABOUT} element={<About />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

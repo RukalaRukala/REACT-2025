@@ -1,6 +1,6 @@
 import React from 'react';
 import type { SearchFieldProps } from '../Search.model.tsx';
-import { PLACEHOLDER, SEARCH_FIELD_LABELS } from '../Search.const.tsx';
+import SearchInput from './SearchInput';
 import styles from '../Search.module.scss';
 
 const SearchField = ({ value, onChange }: SearchFieldProps) => {
@@ -11,21 +11,11 @@ const SearchField = ({ value, onChange }: SearchFieldProps) => {
     onChange(newValue);
   };
 
-  const renderInput = () => {
-    return (
-      <input
-        type="text"
-        value={value}
-        onChange={handleInputChange}
-        placeholder={PLACEHOLDER}
-        className={styles.searchField}
-        autoComplete="off"
-        aria-label={SEARCH_FIELD_LABELS.ARIA_LABEL}
-      />
-    );
-  };
-
-  return <div className={styles.searchFieldContainer}>{renderInput()}</div>;
+  return (
+    <div className={styles.searchFieldContainer}>
+      <SearchInput value={value} onChange={handleInputChange} />
+    </div>
+  );
 };
 
 export default SearchField;

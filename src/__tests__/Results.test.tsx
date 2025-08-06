@@ -28,6 +28,7 @@ describe('Results Tests', () => {
           pets={testPets}
           isLoading={false}
           page={1}
+          totalPages={1}
           onPageChange={() => {}}
         />
       </MemoryRouter>
@@ -40,12 +41,18 @@ describe('Results Tests', () => {
   it('shows loading skeletons', () => {
     render(
       <MemoryRouter>
-        <Results pets={[]} isLoading={true} page={1} onPageChange={() => {}} />
+        <Results
+          pets={[]}
+          isLoading={true}
+          page={1}
+          totalPages={1}
+          onPageChange={() => {}}
+        />
       </MemoryRouter>
     );
 
     const skeletons = screen.getAllByTestId('skeleton-item');
-    expect(skeletons).toHaveLength(3);
+    expect(skeletons).toHaveLength(4);
   });
 
   test('shows pet names correctly', () => {

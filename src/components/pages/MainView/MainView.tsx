@@ -64,6 +64,7 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
           pets={state.searchResults}
           isLoading={state.isLoading}
           page={pageNum}
+          totalPages={1}
           onPageChange={handlePageChange}
         />
       </div>
