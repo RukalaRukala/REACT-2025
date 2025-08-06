@@ -1,10 +1,10 @@
 import { Component } from 'react';
 import './App.scss';
-import Search from './components/Search/Search.tsx';
-import Results from './components/Results/Results.tsx';
-import TestErrorButton from './components/ErrorBoundary/TestErrorButton.tsx';
+import Header from './components/Header/Header.tsx';
+import SearchSection from './components/SearchSection/SearchSection.tsx';
+import ResultsSection from './components/ResultsSection/ResultsSection.tsx';
 import { searchPetsByStatus } from './components/Search/Search.api.tsx';
-import { CONSOLE_MESSAGES, APP_MESSAGES, APP_TITLES } from './constants';
+import { CONSOLE_MESSAGES, APP_MESSAGES } from './constants';
 import type { Pet } from './components/Search/Search.model.tsx';
 
 interface AppState {
@@ -69,54 +69,19 @@ class App extends Component<Record<string, never>, AppState> {
     return this.state.searchError !== null;
   };
 
-  renderHeader = () => {
-    return (
-      <header className="app-header">
-        <h1 className="app-title">{APP_TITLES.MAIN_TITLE}</h1>
-        <p className="app-subtitle">{APP_TITLES.SUBTITLE}</p>
-        <TestErrorButton />
-      </header>
-    );
-  };
-
-  renderSearchSection = () => {
-    return (
-      <section className="search-section">
-        <h2 className="search-section-title">{APP_TITLES.SEARCH_SECTION}</h2>
-        <Search onSearch={this.handleSearch} />
-
-        {this.hasError() && (
-          <div className="error-message">{this.state.searchError}</div>
-        )}
-      </section>
-    );
-  };
-
-  renderResultsSection = () => {
-    const { searchResults, isLoading, hasSearched } = this.state;
-
-    if (!hasSearched) {
-      return <></>;
-    }
-
-    return (
-      <section className="results-section">
-        <h2 className="results-section-title">
-          {isLoading
-            ? APP_MESSAGES.SEARCHING
-            : `${APP_MESSAGES.SEARCH_RESULTS} ${searchResults.length > 0 ? `(${searchResults.length})` : ''}`}
-        </h2>
-        <Results pets={searchResults} isLoading={isLoading} />
-      </section>
-    );
-  };
-
   render() {
     return (
       <div className="app">
-        {this.renderHeader()}
-        {this.renderSearchSection()}
-        {this.renderResultsSection()}
+        <Header />
+        <SearchSection
+          onSearch={this.handleSearch}
+          searchError={this.state.searchError}
+        />
+        <ResultsSection
+          searchResults={this.state.searchResults}
+          isLoading={this.state.isLoading}
+          hasSearched={this.state.hasSearched}
+        />
       </div>
     );
   }
