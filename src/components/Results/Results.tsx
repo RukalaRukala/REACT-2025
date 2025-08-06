@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import Item from './components/Item.tsx';
 import SkeletonItem from './components/SkeletonItem.tsx';
-import { RESULTS_MESSAGES } from '../Search/Search.const.tsx';
+import { RESULTS_MESSAGES } from '../../constants';
 import styles from './Results.module.scss';
 import type { Pet } from '../Search/Search.model.tsx';
 

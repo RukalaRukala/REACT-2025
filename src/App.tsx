@@ -4,12 +4,8 @@ import Search from './components/Search/Search.tsx';
 import Results from './components/Results/Results.tsx';
 import TestErrorButton from './components/ErrorBoundary/TestErrorButton.tsx';
 import { searchPetsByStatus } from './components/Search/Search.api.tsx';
+import { CONSOLE_MESSAGES, APP_MESSAGES, APP_TITLES } from './constants';
 import type { Pet } from './components/Search/Search.model.tsx';
-import {
-  APP_TITLES,
-  APP_MESSAGES,
-  CONSOLE_MESSAGES,
-} from './components/Search/Search.const.tsx';
 
 interface AppState {
   searchResults: Pet[];

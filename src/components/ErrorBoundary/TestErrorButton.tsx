@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { TEST_ERROR_MESSAGES } from '../Search/Search.const.tsx';
+import { TEST_ERROR_MESSAGES } from '../../constants';
 import styles from './TestErrorButton.module.scss';
 
 interface TestErrorButtonState {
@@ -28,10 +28,11 @@ class TestErrorButton extends Component<
 
     return (
       <button
+        type="button"
         onClick={this.handleThrowError}
-        className={styles.testErrorButton}
+        className={styles.errorButton}
       >
-        {TEST_ERROR_MESSAGES.BUTTON_TEXT}
+        Test Error Boundary
       </button>
     );
   }

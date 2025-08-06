@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import type { SearchButtonProps } from '../Search.model.tsx';
-import { SEARCH_BUTTON_TEXT, SEARCH_BUTTON_LABELS } from '../Search.const.tsx';
+import { UI_TEXTS, SEARCH_BUTTON_LABELS } from '../../../constants';
 import styles from '../Search.module.scss';
 
 class SearchButton extends Component<SearchButtonProps> {
@@ -17,7 +17,7 @@ class SearchButton extends Component<SearchButtonProps> {
         className={styles.searchButton}
         aria-label={SEARCH_BUTTON_LABELS.ARIA_LABEL}
       >
-        <span className={styles.buttonText}>{SEARCH_BUTTON_TEXT}</span>
+        <span className={styles.buttonText}>{UI_TEXTS.BUTTONS.SEARCH}</span>
       </button>
     );
   }

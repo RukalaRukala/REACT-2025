@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import type { ReactNode, ErrorInfo } from 'react';
-import { ERROR_BOUNDARY_MESSAGES } from '../Search/Search.const.tsx';
+import { ERROR_BOUNDARY_MESSAGES } from '../../constants';
 import styles from './ErrorBoundary.module.scss';
 
 interface ErrorBoundaryProps {

@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import type { Pet } from '../../Search/Search.model.tsx';
-import { ITEM_LABELS, DEFAULT_VALUES } from '../../Search/Search.const.tsx';
+import { UI_TEXTS, DEFAULT_VALUES } from '../../../constants';
 import styles from './Item.module.scss';
 
 interface ItemProps {
@@ -18,17 +18,17 @@ class Item extends Component<ItemProps> {
         </h2>
 
         <p className={styles.field}>
-          <span className={styles.fieldLabel}>{ITEM_LABELS.ID}</span>
+          <span className={styles.fieldLabel}>{UI_TEXTS.LABELS.ID}</span>
           <span className={styles.fieldValue}>{pet.id}</span>
         </p>
 
         <p className={styles.field}>
-          <span className={styles.fieldLabel}>{ITEM_LABELS.NAME}</span>
+          <span className={styles.fieldLabel}>{UI_TEXTS.LABELS.NAME}</span>
           <span className={styles.fieldValue}>{pet.name}</span>
         </p>
 
         <p className={styles.field}>
-          <span className={styles.fieldLabel}>{ITEM_LABELS.CATEGORY}</span>
+          <span className={styles.fieldLabel}>{UI_TEXTS.LABELS.CATEGORY}</span>
           <span className={styles.fieldValue}>
             {pet.category?.name || DEFAULT_VALUES.CATEGORY_NOT_SPECIFIED}
           </span>

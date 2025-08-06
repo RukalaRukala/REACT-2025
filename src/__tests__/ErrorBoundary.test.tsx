@@ -20,7 +20,7 @@ describe('ErrorBoundary Tests', () => {
     mockConsole.mockRestore();
   });
 
-  it('catches errors from child components', () => {
+  it('catches errors from child components and shows error UI with buttons', () => {
     render(
       <ErrorBoundary>
         <BadComponent shouldThrow={true} />
@@ -28,15 +28,6 @@ describe('ErrorBoundary Tests', () => {
     );
 
     expect(screen.getByText('Oops! Something went wrong')).toBeInTheDocument();
-  });
-
-  it('shows error UI with buttons', () => {
-    render(
-      <ErrorBoundary>
-        <BadComponent shouldThrow={true} />
-      </ErrorBoundary>
-    );
-
     expect(screen.getByText('Try Again')).toBeInTheDocument();
     expect(screen.getByText('Reload Page')).toBeInTheDocument();
   });

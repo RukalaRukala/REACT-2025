@@ -4,10 +4,10 @@ import SearchButton from './components/SearchButton.tsx';
 import StatusHint from './components/StatusHint.tsx';
 import type { SearchProps, SearchState } from './Search.model.tsx';
 import {
-  EMPTY_STRING,
-  STORAGE_KEY,
+  COMMON_STRINGS,
+  STORAGE_KEYS,
   CONSOLE_MESSAGES,
-} from './Search.const.tsx';
+} from '../../constants';
 import styles from './Search.module.scss';
 
 class Search extends Component<SearchProps, SearchState> {
@@ -29,11 +29,11 @@ class Search extends Component<SearchProps, SearchState> {
 
   loadSearchQueryFromStorage = (): string => {
     try {
-      const savedQuery = localStorage.getItem(STORAGE_KEY);
-      return savedQuery || EMPTY_STRING;
+      const savedQuery = localStorage.getItem(STORAGE_KEYS.SEARCH_QUERY);
+      return savedQuery || COMMON_STRINGS.EMPTY;
     } catch (error) {
       console.warn(CONSOLE_MESSAGES.STORAGE_LOAD_ERROR, error);
-      return EMPTY_STRING;
+      return COMMON_STRINGS.EMPTY;
     }
   };
 
@@ -44,7 +44,7 @@ class Search extends Component<SearchProps, SearchState> {
 
     this.debounceTimer = setTimeout(() => {
       try {
-        localStorage.setItem(STORAGE_KEY, query);
+        localStorage.setItem(STORAGE_KEYS.SEARCH_QUERY, query);
       } catch (error) {
         console.warn(CONSOLE_MESSAGES.STORAGE_SAVE_ERROR, error);
       }

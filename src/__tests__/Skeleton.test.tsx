@@ -1,6 +1,12 @@
 import { render } from '@testing-library/react';
 import Skeleton from '../components/Skeleton/Skeleton';
 
+const EXPECTED_DEFAULT_STYLES = {
+  height: '1.25rem',
+  width: '100%',
+  borderRadius: '0.25rem',
+};
+
 describe('Skeleton Tests', () => {
   it('renders skeleton element', () => {
     render(<Skeleton />);
@@ -13,11 +19,7 @@ describe('Skeleton Tests', () => {
     render(<Skeleton />);
 
     const skeletonElement = document.querySelector('.skeleton');
-    expect(skeletonElement).toHaveStyle({
-      height: '1.25rem',
-      width: '100%',
-      borderRadius: '0.25rem',
-    });
+    expect(skeletonElement).toHaveStyle(EXPECTED_DEFAULT_STYLES);
   });
 
   it('applies custom class', () => {

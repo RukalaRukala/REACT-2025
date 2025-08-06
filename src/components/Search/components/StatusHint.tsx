@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { STATUS_HINT_LABELS } from '../Search.const.tsx';
+import { STATUS_HINT_LABELS } from '../../../constants';
 import styles from './StatusHint.module.scss';
 
 class StatusHint extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import type { SearchFieldProps } from '../Search.model.tsx';
-import { PLACEHOLDER, SEARCH_FIELD_LABELS } from '../Search.const.tsx';
+import { UI_TEXTS, SEARCH_FIELD_LABELS } from '../../../constants';
 import styles from '../Search.module.scss';
 
 class SearchField extends Component<SearchFieldProps> {
@@ -17,7 +17,7 @@ class SearchField extends Component<SearchFieldProps> {
         type="text"
         value={value}
         onChange={this.handleInputChange}
-        placeholder={PLACEHOLDER}
+        placeholder={UI_TEXTS.PLACEHOLDERS.SEARCH_INPUT}
         className={styles.searchField}
         autoComplete="off"
         aria-label={SEARCH_FIELD_LABELS.ARIA_LABEL}
