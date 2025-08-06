@@ -1,22 +1,16 @@
 import { Component } from 'react';
-import { STATUS_HINT_LABELS } from '../../../constants';
+import { STATUS_HINT_LABELS, AVAILABLE_STATUSES } from '../../../constants';
 import styles from './StatusHint.module.scss';
 
 class StatusHint extends Component {
-  getAvailableStatuses = (): string[] => {
-    return ['available', 'pending', 'sold'];
-  };
-
   renderTitle = () => {
     return <p className={styles.title}>{STATUS_HINT_LABELS.TITLE}</p>;
   };
 
   renderStatusesList = () => {
-    const statuses = this.getAvailableStatuses();
-
     return (
       <div className={styles.statuses}>
-        {statuses.map((status, idx) => (
+        {AVAILABLE_STATUSES.map((status, idx) => (
           <span key={idx} className={styles.status}>
             {status}
           </span>

@@ -42,3 +42,5 @@ export const ERROR_BOUNDARY_MESSAGES = {
   RELOAD_PAGE: 'Reload Page',
   ERROR_DETAILS: 'Error Details:',
 } as const;
+
+export const AVAILABLE_STATUSES = ['available', 'pending', 'sold'] as const;
