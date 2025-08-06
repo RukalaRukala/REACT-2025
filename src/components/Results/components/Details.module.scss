@@ -1,0 +1,35 @@
+@use '../../../styles/functions.scss' as *;
+@use '../../../styles/colors.scss' as *;
+
+.detailsOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.detailsPanel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: toRem(400);
+  z-index: 1001;
+  background: $card-bg;
+  padding: toRem(16);
+  box-shadow: 0 0 toRem(16) $card-shadow-hover;
+}
+
+.detailsClose {
+  position: absolute;
+  top: toRem(8);
+  right: toRem(8);
+  background: none;
+  border: none;
+  font-size: toRem(24);
+  cursor: pointer;
+  line-height: 1;
+}

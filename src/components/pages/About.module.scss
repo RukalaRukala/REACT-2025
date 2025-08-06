@@ -1,0 +1,23 @@
+@use '../../styles/colors.scss' as *;
+
+.about {
+  padding: 2rem;
+}
+
+.about__title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.about__author {
+  margin-bottom: 0.5rem;
+}
+
+.about__link {
+  color: $primary-color;
+  text-decoration: underline;
+  &:hover {
+    color: $primary-hover-color;
+  }
+}
