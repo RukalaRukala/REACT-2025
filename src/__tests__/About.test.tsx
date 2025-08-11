@@ -4,7 +4,7 @@ import About from '../components/pages/About';
 describe('About page', () => {
   it('renders author info', () => {
     render(<About />);
-    expect(screen.getByText(/author|автор/i)).toBeInTheDocument();
+    expect(screen.getByText(/author/i)).toBeInTheDocument();
   });
 
   it('contains RS School React course link', () => {

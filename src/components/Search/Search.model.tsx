@@ -4,6 +4,7 @@ export interface SearchButtonProps {
 
 export interface SearchProps {
   onSearch: (query: string) => void;
+  onRefresh?: () => void;
 }
 
 export interface SearchFieldProps {

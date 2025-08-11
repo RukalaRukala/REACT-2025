@@ -1,38 +1,20 @@
-import { useEffect, useState } from 'react';
-import { searchPetsByStatus } from '../../Search/Search.api';
+import { useGetPetByIdQuery } from '../../../store/api/petsApi';
 import { DETAILS_MESSAGES } from './Details.const';
-import type { Pet } from '../../Search/Search.model.tsx';
 import styles from './Details.module.scss';
 
 function Details({ id, onClose }: { id: string; onClose: () => void }) {
-  const [pet, setPet] = useState<Pet | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const {
+    data: pet,
+    isLoading: loading,
+    error,
+    refetch,
+  } = useGetPetByIdQuery(Number(id));
 
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-    setPet(null);
-    Promise.all([
-      searchPetsByStatus('available'),
-      searchPetsByStatus('pending'),
-      searchPetsByStatus('sold'),
-    ])
-      .then((results) => {
-        const all = ([] as Pet[]).concat(...results);
-        const found = all.find((p: Pet) => String(p.id) === String(id));
-        if (found) {
-          setPet(found);
-        } else {
-          setError(DETAILS_MESSAGES.NOT_FOUND);
-        }
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(DETAILS_MESSAGES.ERROR);
-        setLoading(false);
-      });
-  }, [id]);
+  const errorMessage = error
+    ? DETAILS_MESSAGES.ERROR
+    : pet === null || pet === undefined
+      ? DETAILS_MESSAGES.NOT_FOUND
+      : null;
 
   if (loading) {
     return (
@@ -55,7 +37,7 @@ function Details({ id, onClose }: { id: string; onClose: () => void }) {
     );
   }
 
-  if (error) {
+  if (errorMessage) {
     return (
       <>
         <div className={styles.detailsOverlay} />
@@ -68,8 +50,14 @@ function Details({ id, onClose }: { id: string; onClose: () => void }) {
             ×
           </button>
           <div className={styles.errorContainer}>
-            <div className={styles.errorIcon}>⚠️</div>
-            <div className={styles.errorText}>{error}</div>
+            <div className={styles.errorMessage}>{errorMessage}</div>
+            <button
+              onClick={() => refetch()}
+              className={styles.retryButton}
+              type="button"
+            >
+              Try Again
+            </button>
           </div>
         </div>
       </>

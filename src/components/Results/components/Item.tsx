@@ -12,8 +12,8 @@ interface ItemProps {
 const Item = (props: ItemProps) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const page = searchParams.get('page') ? searchParams.get('page') : '1';
-  const detailsUrl = `/${page}/${props.pet.id}`;
+
+  const detailsUrl = `/pet/${props.pet.id}?${searchParams.toString()}`;
 
   const dispatch = useAppDispatch();
   const selectedPets = useAppSelector(

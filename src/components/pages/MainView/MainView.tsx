@@ -18,6 +18,10 @@ interface MainViewProps {
   state: {
     searchResults: Pet[];
     isLoading: boolean;
+    hasSearched: boolean;
+    searchError: string | null;
+    currentQuery: string;
+    onRefresh: () => void;
   };
   handleSearch: (query: string) => void;
 }
@@ -27,18 +31,22 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
     (state) => state.selectedItems.selectedPets
   );
   const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = searchParams.get('page');
-  const pageNum = pageParam ? parseInt(pageParam, 10) : 1;
-  const { page, detailsId } = useParams();
+  const { detailsId } = useParams();
   const navigate = useNavigate();
 
-  if (pageParam && (isNaN(pageNum) || pageNum < 1)) {
+  const pageParam = searchParams.get('page');
+  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+
+  if (pageParam && (isNaN(currentPage) || currentPage < 1)) {
     return <Navigate to={APP_ROUTES.NOT_FOUND} replace />;
   }
 
   const handleCloseDetails = () => {
     const params = new URLSearchParams(searchParams);
-    navigate({ pathname: `/${page || pageNum}`, search: params.toString() });
+    navigate({
+      pathname: '/',
+      search: params.toString(),
+    });
   };
 
   const handlePageChange = (newPage: number) => {
@@ -60,11 +68,11 @@ const MainView = ({ state, handleSearch }: MainViewProps) => {
           <h1 className={styles.appTitle}>{APP_TITLES.MAIN_TITLE}</h1>
           <p className={styles.appSubtitle}>{APP_TITLES.SUBTITLE}</p>
         </header>
-        <Search onSearch={handleSearch} />
+        <Search onSearch={handleSearch} onRefresh={state.onRefresh} />
         <Results
           pets={state.searchResults}
           isLoading={state.isLoading}
-          page={pageNum}
+          page={currentPage}
           onPageChange={handlePageChange}
         />
       </div>

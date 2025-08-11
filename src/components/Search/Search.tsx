@@ -11,7 +11,7 @@ import {
 } from './Search.const.tsx';
 import styles from './Search.module.scss';
 
-const Search = ({ onSearch }: SearchProps) => {
+const Search = ({ onSearch, onRefresh }: SearchProps) => {
   const [searchQuery, setSearchQuery] = useLocalStorage(
     STORAGE_KEY,
     EMPTY_STRING
@@ -29,6 +29,12 @@ const Search = ({ onSearch }: SearchProps) => {
     }
   };
 
+  const handleRefresh = (): void => {
+    if (onRefresh) {
+      onRefresh();
+    }
+  };
+
   const renderSearchField = () => {
     return <SearchField value={searchQuery} onChange={handleSearchChange} />;
   };
@@ -37,14 +43,33 @@ const Search = ({ onSearch }: SearchProps) => {
     return <SearchButton onSearch={handleSearch} />;
   };
 
+  const renderRefreshButton = () => {
+    if (!onRefresh) return null;
+
+    return (
+      <button
+        onClick={handleRefresh}
+        className={styles.refreshButton}
+        type="button"
+        title="Refresh search results"
+        aria-label="Refresh search results"
+      >
+        🔄 Refresh
+      </button>
+    );
+  };
+
   const renderStatusHint = () => {
     return <StatusHint />;
   };
 
   return (
     <div className={styles.searchContainer}>
-      {renderSearchField()}
-      {renderSearchButton()}
+      <div className={styles.searchControls}>
+        {renderSearchField()}
+        {renderSearchButton()}
+        {renderRefreshButton()}
+      </div>
       {renderStatusHint()}
     </div>
   );

@@ -4,8 +4,8 @@ export const APP_MESSAGES = {
 
 export const APP_ROUTES = {
   ROOT: '/',
-  PAGE: ':page',
-  DETAILS: ':page/:detailsId',
+  PAGE: '/',
+  DETAILS: '/pet/:detailsId',
   NOT_FOUND: '/404',
   ABOUT: '/about',
 };

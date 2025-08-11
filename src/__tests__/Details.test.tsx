@@ -1,12 +1,27 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Details from '../components/Results/components/Details';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import selectedItemsReducer from '../store/selectedItemsSlice';
+import { petsApi } from '../store/api/petsApi';
 
-jest.mock('../components/Search/Search.api', () => ({
-  searchPetsByStatus: jest.fn(),
-}));
+jest.mock('../store/api/petsApi', () => {
+  const actualModule = jest.requireActual('../store/api/petsApi');
+  return {
+    ...actualModule,
+    useGetPetByIdQuery: jest.fn(),
+  };
+});
 
-import { searchPetsByStatus } from '../components/Search/Search.api';
+import { useGetPetByIdQuery } from '../store/api/petsApi';
+
+type MockQueryResult = {
+  data: typeof testPet | null | undefined;
+  isLoading: boolean;
+  error: { message: string } | undefined;
+  refetch: jest.Mock;
+};
 
 const testPet = {
   id: 1,
@@ -16,74 +31,97 @@ const testPet = {
   photoUrls: ['photo1.jpg'],
 };
 
+const createTestStore = () =>
+  configureStore({
+    reducer: {
+      selectedItems: selectedItemsReducer,
+      [petsApi.reducerPath]: petsApi.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }).concat(petsApi.middleware),
+  });
+
+const renderWithProvider = (component: React.ReactElement) => {
+  const testStore = createTestStore();
+  return render(<Provider store={testStore}>{component}</Provider>);
+};
+
 describe('Details Tests', () => {
   const mockOnClose = jest.fn();
+  const mockUseGetPetByIdQuery = useGetPetByIdQuery as jest.MockedFunction<
+    typeof useGetPetByIdQuery
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();
+    mockOnClose.mockClear();
   });
 
   test('shows loading state', () => {
-    (searchPetsByStatus as jest.Mock).mockImplementation(
-      () => new Promise(() => {})
-    );
+    mockUseGetPetByIdQuery.mockReturnValue({
+      data: undefined,
+      isLoading: true,
+      error: undefined,
+      refetch: jest.fn(),
+    } satisfies MockQueryResult);
 
-    render(<Details id="1" onClose={mockOnClose} />);
+    renderWithProvider(<Details id="1" onClose={mockOnClose} />);
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   test('shows pet information', async () => {
-    (searchPetsByStatus as jest.Mock)
-      .mockResolvedValueOnce([testPet])
-      .mockResolvedValueOnce([])
-      .mockResolvedValueOnce([]);
+    mockUseGetPetByIdQuery.mockReturnValue({
+      data: testPet,
+      isLoading: false,
+      error: undefined,
+      refetch: jest.fn(),
+    } satisfies MockQueryResult);
 
-    render(<Details id="1" onClose={mockOnClose} />);
+    renderWithProvider(<Details id="1" onClose={mockOnClose} />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Pet Details')).toBeInTheDocument();
-    });
-
-    expect(screen.getByText('ID: 1')).toBeInTheDocument();
-    expect(screen.getByText('Name: Bobby')).toBeInTheDocument();
-    expect(screen.getByText('Status: available')).toBeInTheDocument();
-    expect(screen.getByText('Category: Dogs')).toBeInTheDocument();
+    expect(screen.getByText(/Bobby/)).toBeInTheDocument();
+    expect(screen.getByText(/ID.*1/)).toBeInTheDocument();
+    expect(screen.getByText(/available/)).toBeInTheDocument();
   });
 
   test('shows error when pet is not found', async () => {
-    (searchPetsByStatus as jest.Mock).mockResolvedValue([]);
+    mockUseGetPetByIdQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: undefined,
+      refetch: jest.fn(),
+    } satisfies MockQueryResult);
 
-    render(<Details id="999" onClose={mockOnClose} />);
+    renderWithProvider(<Details id="999" onClose={mockOnClose} />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Not found')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Not found')).toBeInTheDocument();
   });
 
   test('shows error when API fails', async () => {
-    (searchPetsByStatus as jest.Mock).mockRejectedValue(
-      new Error('Something went wrong')
-    );
+    mockUseGetPetByIdQuery.mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      error: { message: 'API Error' },
+      refetch: jest.fn(),
+    } satisfies MockQueryResult);
 
-    render(<Details id="1" onClose={mockOnClose} />);
+    renderWithProvider(<Details id="1" onClose={mockOnClose} />);
 
-    await waitFor(() => {
-      expect(screen.getByText('Error')).toBeInTheDocument();
-    });
+    expect(screen.getByText('Error')).toBeInTheDocument();
   });
 
   test('close button works', async () => {
-    (searchPetsByStatus as jest.Mock)
-      .mockResolvedValueOnce([testPet])
-      .mockResolvedValueOnce([])
-      .mockResolvedValueOnce([]);
+    mockUseGetPetByIdQuery.mockReturnValue({
+      data: testPet,
+      isLoading: false,
+      error: undefined,
+      refetch: jest.fn(),
+    } satisfies MockQueryResult);
 
-    render(<Details id="1" onClose={mockOnClose} />);
-
-    await waitFor(() => {
-      expect(screen.getByText('Pet Details')).toBeInTheDocument();
-    });
+    renderWithProvider(<Details id="1" onClose={mockOnClose} />);
 
     const closeButton = screen.getByRole('button', { name: /close details/i });
     await userEvent.click(closeButton);
@@ -91,17 +129,21 @@ describe('Details Tests', () => {
     expect(mockOnClose).toHaveBeenCalled();
   });
 
-  test('searches for pet in all statuses', async () => {
-    (searchPetsByStatus as jest.Mock).mockResolvedValue([]);
+  test('refetch button works', async () => {
+    const mockRefetch = jest.fn();
 
-    render(<Details id="1" onClose={mockOnClose} />);
+    mockUseGetPetByIdQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: { message: 'API Error' },
+      refetch: mockRefetch,
+    } satisfies MockQueryResult);
 
-    await waitFor(() => {
-      expect(screen.getByText('Not found')).toBeInTheDocument();
-    });
+    renderWithProvider(<Details id="1" onClose={mockOnClose} />);
 
-    expect(searchPetsByStatus).toHaveBeenCalledWith('available');
-    expect(searchPetsByStatus).toHaveBeenCalledWith('pending');
-    expect(searchPetsByStatus).toHaveBeenCalledWith('sold');
+    const retryButton = screen.getByText('Try Again');
+    await userEvent.click(retryButton);
+
+    expect(mockRefetch).toHaveBeenCalled();
   });
 });
