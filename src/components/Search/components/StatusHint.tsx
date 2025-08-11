@@ -29,6 +29,11 @@ const StatusHint = () => {
       <div className={styles.content}>
         {renderTitle()}
         {renderStatusesList()}
+        <p className={styles.info}>
+          Each status is queried only once, subsequent searches use cache. If
+          you want to refresh data from the server, select a status and press
+          refresh.
+        </p>
       </div>
     );
   };

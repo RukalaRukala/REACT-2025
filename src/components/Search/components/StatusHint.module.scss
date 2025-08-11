@@ -31,7 +31,7 @@
 
 .statuses {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: toRem(8);
 }
 
@@ -45,4 +45,13 @@
   font-weight: 500;
   color: $notification-text;
   font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+}
+
+.info {
+  margin: toRem(12) 0 0 0;
+  font-size: toRem(13);
+  font-weight: 400;
+  color: $notification-text;
+  line-height: 1.4;
+  opacity: 0.8;
 }
