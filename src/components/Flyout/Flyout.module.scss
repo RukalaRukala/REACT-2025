@@ -1,0 +1,64 @@
+@use '../../styles/functions.scss' as *;
+
+.flyout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: toRem(300);
+  background: var(--card-bg);
+  box-shadow: 0 0 toRem(16) var(--card-shadow-hover);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-primary);
+}
+
+.content {
+  flex: 1;
+  padding: toRem(24);
+  display: flex;
+  flex-direction: column;
+}
+
+.count {
+  margin-bottom: toRem(24);
+  font-size: toRem(16);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.buttons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: toRem(12);
+}
+
+.button {
+  padding: toRem(12) toRem(16);
+  border: none;
+  border-radius: toRem(4);
+  cursor: pointer;
+  font-size: toRem(14);
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:focus {
+    outline: toRem(2) solid var(--primary-color);
+    outline-offset: toRem(2);
+  }
+}
+
+.buttonPrimary {
+  background: var(--primary-color);
+  color: var(--text-on-primary);
+}
+
+.buttonSecondary {
+  background: var(--gray-light);
+  color: var(--text-primary);
+}
