@@ -1,12 +1,12 @@
 import { create } from 'zustand';
-import type { FormData, SubmittedData, Country } from '../types/form';
+import type { UserFormData, SubmittedData, Country } from '../types/form';
 
 interface AppState {
   submittedData: SubmittedData[];
   countries: Country[];
   lastSubmittedId: string | null;
   addSubmittedData: (
-    data: FormData,
+    data: UserFormData,
     formType: 'uncontrolled' | 'react-hook-form'
   ) => void;
   loadCountries: () => void;
@@ -18,7 +18,7 @@ export const useAppStore = create<AppState>((set) => ({
   countries: [],
   lastSubmittedId: null,
 
-  addSubmittedData: (data: FormData, formType) => {
+  addSubmittedData: (data: UserFormData, formType) => {
     const id = Date.now().toString();
 
     const newSubmittedData: SubmittedData = {

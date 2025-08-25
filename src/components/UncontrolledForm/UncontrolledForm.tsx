@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useAppStore } from '../../store/appStore';
 import { formValidationSchema } from '../../utils/validation';
 import { PasswordStrength } from '../PasswordStrength/PasswordStrength';
-import type { FormData } from '../../types/form';
+import type { UserFormData } from '../../types/form';
 import './UncontrolledForm.scss';
 import { ValidationError } from 'yup';
 
@@ -75,7 +75,7 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
         profilePicture = await convertFileToBase64(file);
       }
 
-      const formData: FormData = {
+      const formData: UserFormData = {
         name: nameRef.current?.value || '',
         age: Number(ageRef.current?.value) || 0,
         email: emailRef.current?.value || '',

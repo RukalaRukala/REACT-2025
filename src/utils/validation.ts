@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import type { UserFormData } from '../types/form';
 
 const getPasswordStrength = (password: string): number => {
   let strength = 0;
@@ -14,7 +15,7 @@ const getPasswordStrength = (password: string): number => {
   return strength;
 };
 
-export const formValidationSchema = yup.object({
+export const formValidationSchema: yup.ObjectSchema<UserFormData> = yup.object({
   name: yup
     .string()
     .required('Name is required')
@@ -58,7 +59,7 @@ export const formValidationSchema = yup.object({
     .oneOf([yup.ref('password')], 'Passwords must match'),
 
   gender: yup
-    .string()
+    .mixed<'male' | 'female' | 'other'>()
     .required('Please select gender')
     .oneOf(['male', 'female', 'other'], 'Please select a valid option'),
 
@@ -67,7 +68,7 @@ export const formValidationSchema = yup.object({
     .required('You must accept the terms')
     .oneOf([true], 'You must accept the terms and conditions'),
 
-  profilePicture: yup.string().nullable(),
+  profilePicture: yup.string().nullable().defined(),
 
   country: yup.string().required('Please select a country'),
 });

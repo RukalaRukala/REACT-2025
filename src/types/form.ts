@@ -1,4 +1,4 @@
-export interface FormData {
+export interface UserFormData {
   name: string;
   age: number;
   email: string;
@@ -15,7 +15,7 @@ export interface Country {
   name: string;
 }
 
-export interface SubmittedData extends FormData {
+export interface SubmittedData extends UserFormData {
   id: string;
   submittedAt: Date;
   formType: 'uncontrolled' | 'react-hook-form';

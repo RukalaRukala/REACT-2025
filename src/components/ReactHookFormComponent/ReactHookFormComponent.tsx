@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppStore } from '../../store/appStore';
 import { formValidationSchema } from '../../utils/validation';
 import { PasswordStrength } from '../PasswordStrength/PasswordStrength';
-import type { FormData } from '../../types/form';
+import type { UserFormData } from '../../types/form';
 import './ReactHookFormComponent.scss';
 
 interface ReactHookFormProps {
@@ -23,7 +23,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
     formState: { errors, isSubmitting, isValid },
     watch,
     setValue,
-  } = useForm<FormData>({
+  } = useForm<UserFormData>({
     resolver: yupResolver(formValidationSchema),
     mode: 'onChange',
     defaultValues: {
@@ -82,7 +82,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
     }
   };
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<UserFormData> = async (data) => {
     try {
       addSubmittedData(data, 'react-hook-form');
       onSuccess();
