@@ -38,7 +38,7 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
     if (file.size > maxSize) {
       setErrors((prev) => ({
         ...prev,
-        profilePicture: 'Размер файла не должен превышать 5MB',
+        profilePicture: 'File size should not exceed 5MB',
       }));
       return;
     }
@@ -46,7 +46,7 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
     if (!allowedTypes.includes(file.type)) {
       setErrors((prev) => ({
         ...prev,
-        profilePicture: 'Разрешены только форматы: JPEG, JPG, PNG',
+        profilePicture: 'Only JPEG, JPG, PNG formats are allowed',
       }));
       return;
     }
@@ -110,21 +110,21 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
     <form onSubmit={handleSubmit} className="uncontrolled-form">
       <div className="form-field">
         <label htmlFor="name" className="form-label">
-          Имя *
+          Name *
         </label>
         <input
           type="text"
           id="name"
           ref={nameRef}
           className={`form-input ${errors.name ? 'form-input--error' : ''}`}
-          placeholder="Введите ваше имя"
+          placeholder="Enter your name"
         />
         {errors.name && <span className="form-error">{errors.name}</span>}
       </div>
 
       <div className="form-field">
         <label htmlFor="age" className="form-label">
-          Возраст *
+          Age *
         </label>
         <input
           type="number"
@@ -133,7 +133,7 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
           min="1"
           max="120"
           className={`form-input ${errors.age ? 'form-input--error' : ''}`}
-          placeholder="Введите ваш возраст"
+          placeholder="Enter your age"
         />
         {errors.age && <span className="form-error">{errors.age}</span>}
       </div>
@@ -147,21 +147,21 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
           id="email"
           ref={emailRef}
           className={`form-input ${errors.email ? 'form-input--error' : ''}`}
-          placeholder="Введите ваш email"
+          placeholder="Enter your email"
         />
         {errors.email && <span className="form-error">{errors.email}</span>}
       </div>
 
       <div className="form-field">
         <label htmlFor="password" className="form-label">
-          Пароль *
+          Password *
         </label>
         <input
           type="password"
           id="password"
           ref={passwordRef}
           className={`form-input ${errors.password ? 'form-input--error' : ''}`}
-          placeholder="Введите пароль"
+          placeholder="Enter password"
           onChange={(e) => setCurrentPassword(e.target.value)}
         />
         {errors.password && (
@@ -172,14 +172,14 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
 
       <div className="form-field">
         <label htmlFor="confirmPassword" className="form-label">
-          Подтверждение пароля *
+          Confirm Password *
         </label>
         <input
           type="password"
           id="confirmPassword"
           ref={confirmPasswordRef}
           className={`form-input ${errors.confirmPassword ? 'form-input--error' : ''}`}
-          placeholder="Подтвердите пароль"
+          placeholder="Confirm password"
         />
         {errors.confirmPassword && (
           <span className="form-error">{errors.confirmPassword}</span>
@@ -188,7 +188,7 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
 
       <div className="form-field">
         <label htmlFor="gender" className="form-label">
-          Пол *
+          Gender *
         </label>
         <select
           id="gender"
@@ -197,18 +197,18 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
           defaultValue=""
         >
           <option value="" disabled>
-            Выберите пол
+            Select gender
           </option>
-          <option value="male">Мужской</option>
-          <option value="female">Женский</option>
-          <option value="other">Другой</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
         </select>
         {errors.gender && <span className="form-error">{errors.gender}</span>}
       </div>
 
       <div className="form-field">
         <label htmlFor="country" className="form-label">
-          Страна *
+          Country *
         </label>
         <select
           id="country"
@@ -217,7 +217,7 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
           defaultValue=""
         >
           <option value="" disabled>
-            Выберите страну
+            Select country
           </option>
           {countries.map((country) => (
             <option key={country.code} value={country.name}>
@@ -230,7 +230,7 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
 
       <div className="form-field">
         <label htmlFor="profilePicture" className="form-label">
-          Фото профиля
+          Profile Picture
         </label>
         <input
           type="file"
@@ -241,7 +241,7 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
           onChange={handleFileChange}
         />
         <small className="form-hint">
-          Разрешены форматы: JPEG, JPG, PNG. Максимальный размер: 5MB
+          Allowed formats: JPEG, JPG, PNG. Maximum size: 5MB
         </small>
         {errors.profilePicture && (
           <span className="form-error">{errors.profilePicture}</span>
@@ -256,9 +256,9 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
             className="form-checkbox"
           />
           <span className="form-checkbox-text">
-            Я согласен с{' '}
+            I agree to the{' '}
             <a href="#" className="form-link">
-              условиями использования
+              terms and conditions
             </a>{' '}
             *
           </span>
@@ -273,7 +273,7 @@ export const UncontrolledForm: React.FC<UncontrolledFormProps> = ({
         className="form-submit-button"
         disabled={isSubmitting}
       >
-        {isSubmitting ? 'Отправка...' : 'Отправить форму'}
+        {isSubmitting ? 'Submitting...' : 'Submit Form'}
       </button>
     </form>
   );

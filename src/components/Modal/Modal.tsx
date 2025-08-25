@@ -70,7 +70,7 @@ export const Modal: React.FC<ModalProps> = ({
             <button
               className="modal__close-button"
               onClick={onClose}
-              aria-label="Закрыть модальное окно"
+              aria-label="Close modal window"
             >
               ✕
             </button>

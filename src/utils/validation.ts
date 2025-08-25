@@ -17,36 +17,36 @@ const getPasswordStrength = (password: string): number => {
 export const formValidationSchema = yup.object({
   name: yup
     .string()
-    .required('Имя обязательно для заполнения')
-    .min(2, 'Имя должно содержать минимум 2 символа')
+    .required('Name is required')
+    .min(2, 'Name must contain at least 2 characters')
     .test(
       'first-letter-uppercase',
-      'Имя должно начинаться с заглавной буквы',
+      'Name must start with a capital letter',
       (value) => {
-        return value ? /^[A-ZА-Я]/.test(value) : false;
+        return value ? /^[A-Z]/.test(value) : false;
       }
     ),
 
   age: yup
     .number()
-    .required('Возраст обязателен для заполнения')
-    .positive('Возраст должен быть положительным числом')
-    .integer('Возраст должен быть целым числом')
-    .min(1, 'Возраст должен быть больше 0')
-    .max(120, 'Возраст не может быть больше 120 лет'),
+    .required('Age is required')
+    .positive('Age must be a positive number')
+    .integer('Age must be an integer')
+    .min(1, 'Age must be greater than 0')
+    .max(120, 'Age cannot be greater than 120 years'),
 
   email: yup
     .string()
-    .required('Email обязателен для заполнения')
-    .email('Введите корректный email адрес'),
+    .required('Email is required')
+    .email('Please enter a valid email address'),
 
   password: yup
     .string()
-    .required('Пароль обязателен для заполнения')
-    .min(8, 'Пароль должен содержать минимум 8 символов')
+    .required('Password is required')
+    .min(8, 'Password must contain at least 8 characters')
     .test(
       'password-strength',
-      'Пароль должен содержать: 1 цифру, 1 заглавную букву, 1 строчную букву, 1 специальный символ',
+      'Password must contain: 1 digit, 1 uppercase letter, 1 lowercase letter, 1 special character',
       (value) => {
         return value ? getPasswordStrength(value) === 4 : false;
       }
@@ -54,22 +54,22 @@ export const formValidationSchema = yup.object({
 
   confirmPassword: yup
     .string()
-    .required('Подтверждение пароля обязательно')
-    .oneOf([yup.ref('password')], 'Пароли должны совпадать'),
+    .required('Password confirmation is required')
+    .oneOf([yup.ref('password')], 'Passwords must match'),
 
   gender: yup
     .string()
-    .required('Выберите пол')
-    .oneOf(['male', 'female', 'other'], 'Выберите корректный вариант'),
+    .required('Please select gender')
+    .oneOf(['male', 'female', 'other'], 'Please select a valid option'),
 
   acceptTerms: yup
     .boolean()
-    .required('Необходимо принять условия')
-    .oneOf([true], 'Вы должны принять условия использования'),
+    .required('You must accept the terms')
+    .oneOf([true], 'You must accept the terms and conditions'),
 
   profilePicture: yup.string().nullable(),
 
-  country: yup.string().required('Выберите страну'),
+  country: yup.string().required('Please select a country'),
 });
 
 export { getPasswordStrength };

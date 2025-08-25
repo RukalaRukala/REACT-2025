@@ -78,7 +78,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
       const base64 = await convertFileToBase64(file);
       setValue('profilePicture', base64);
     } catch (error) {
-      console.error('Ошибка при конвертации файла:', error);
+      console.error('Error converting file:', error);
     }
   };
 
@@ -87,7 +87,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
       addSubmittedData(data, 'react-hook-form');
       onSuccess();
     } catch (error) {
-      console.error('Ошибка при отправке формы:', error);
+      console.error('Error submitting form:', error);
     }
   };
 
@@ -95,14 +95,14 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
     <form onSubmit={handleSubmit(onSubmit)} className="react-hook-form">
       <div className="form-field">
         <label htmlFor="rhf-name" className="form-label">
-          Имя *
+          Name *
         </label>
         <input
           type="text"
           id="rhf-name"
           {...register('name')}
           className={`form-input ${errors.name ? 'form-input--error' : ''}`}
-          placeholder="Введите ваше имя"
+          placeholder="Enter your name"
         />
         {errors.name && (
           <span className="form-error">{errors.name.message}</span>
@@ -111,7 +111,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
 
       <div className="form-field">
         <label htmlFor="rhf-age" className="form-label">
-          Возраст *
+          Age *
         </label>
         <input
           type="number"
@@ -120,7 +120,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
           min="1"
           max="120"
           className={`form-input ${errors.age ? 'form-input--error' : ''}`}
-          placeholder="Введите ваш возраст"
+          placeholder="Enter your age"
         />
         {errors.age && <span className="form-error">{errors.age.message}</span>}
       </div>
@@ -134,7 +134,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
           id="rhf-email"
           {...register('email')}
           className={`form-input ${errors.email ? 'form-input--error' : ''}`}
-          placeholder="Введите ваш email"
+          placeholder="Enter your email"
         />
         {errors.email && (
           <span className="form-error">{errors.email.message}</span>
@@ -143,14 +143,14 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
 
       <div className="form-field">
         <label htmlFor="rhf-password" className="form-label">
-          Пароль *
+          Password *
         </label>
         <input
           type="password"
           id="rhf-password"
           {...register('password')}
           className={`form-input ${errors.password ? 'form-input--error' : ''}`}
-          placeholder="Введите пароль"
+          placeholder="Enter password"
         />
         {errors.password && (
           <span className="form-error">{errors.password.message}</span>
@@ -160,14 +160,14 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
 
       <div className="form-field">
         <label htmlFor="rhf-confirmPassword" className="form-label">
-          Подтверждение пароля *
+          Confirm Password *
         </label>
         <input
           type="password"
           id="rhf-confirmPassword"
           {...register('confirmPassword')}
           className={`form-input ${errors.confirmPassword ? 'form-input--error' : ''}`}
-          placeholder="Подтвердите пароль"
+          placeholder="Confirm password"
         />
         {errors.confirmPassword && (
           <span className="form-error">{errors.confirmPassword.message}</span>
@@ -176,16 +176,16 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
 
       <div className="form-field">
         <label htmlFor="rhf-gender" className="form-label">
-          Пол *
+          Gender *
         </label>
         <select
           id="rhf-gender"
           {...register('gender')}
           className={`form-select ${errors.gender ? 'form-select--error' : ''}`}
         >
-          <option value="male">Мужской</option>
-          <option value="female">Женский</option>
-          <option value="other">Другой</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
         </select>
         {errors.gender && (
           <span className="form-error">{errors.gender.message}</span>
@@ -194,7 +194,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
 
       <div className="form-field">
         <label htmlFor="rhf-country" className="form-label">
-          Страна *
+          Country *
         </label>
         <select
           id="rhf-country"
@@ -203,7 +203,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
           defaultValue=""
         >
           <option value="" disabled>
-            Выберите страну
+            Select country
           </option>
           {countries.map((country) => (
             <option key={country.code} value={country.name}>
@@ -218,7 +218,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
 
       <div className="form-field">
         <label htmlFor="rhf-profilePicture" className="form-label">
-          Фото профиля
+          Profile Picture
         </label>
         <input
           type="file"
@@ -228,7 +228,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
           onChange={handleFileChange}
         />
         <small className="form-hint">
-          Разрешены форматы: JPEG, JPG, PNG. Максимальный размер: 5MB
+          Allowed formats: JPEG, JPG, PNG. Maximum size: 5MB
         </small>
         {errors.profilePicture && (
           <span className="form-error">{errors.profilePicture.message}</span>
@@ -243,9 +243,9 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
             className="form-checkbox"
           />
           <span className="form-checkbox-text">
-            Я согласен с{' '}
+            I agree to the{' '}
             <a href="#" className="form-link">
-              условиями использования
+              terms and conditions
             </a>{' '}
             *
           </span>
@@ -260,7 +260,7 @@ export const ReactHookFormComponent: React.FC<ReactHookFormProps> = ({
         className="form-submit-button"
         disabled={isSubmitting || !isValid}
       >
-        {isSubmitting ? 'Отправка...' : 'Отправить форму'}
+        {isSubmitting ? 'Submitting...' : 'Submit Form'}
       </button>
     </form>
   );

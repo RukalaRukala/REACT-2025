@@ -36,16 +36,16 @@ export const useAppStore = create<AppState>((set) => ({
 
   loadCountries: () => {
     const countries: Country[] = [
-      { code: 'BY', name: 'Беларусь' },
-      { code: 'RU', name: 'Россия' },
-      { code: 'UA', name: 'Украина' },
-      { code: 'PL', name: 'Польша' },
-      { code: 'US', name: 'США' },
-      { code: 'DE', name: 'Германия' },
-      { code: 'FR', name: 'Франция' },
-      { code: 'GB', name: 'Великобритания' },
-      { code: 'CA', name: 'Канада' },
-      { code: 'AU', name: 'Австралия' },
+      { code: 'BY', name: 'Belarus' },
+      { code: 'RU', name: 'Russia' },
+      { code: 'UA', name: 'Ukraine' },
+      { code: 'PL', name: 'Poland' },
+      { code: 'US', name: 'United States' },
+      { code: 'DE', name: 'Germany' },
+      { code: 'FR', name: 'France' },
+      { code: 'GB', name: 'United Kingdom' },
+      { code: 'CA', name: 'Canada' },
+      { code: 'AU', name: 'Australia' },
     ];
 
     set({ countries });

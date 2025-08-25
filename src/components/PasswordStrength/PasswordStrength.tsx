@@ -15,15 +15,15 @@ export const PasswordStrength: React.FC<PasswordStrengthProps> = ({
     switch (strength) {
       case 0:
       case 1:
-        return { color: 'weak', text: 'Сл��бый пароль' };
+        return { color: 'weak', text: 'Weak password' };
       case 2:
-        return { color: 'medium', text: 'Средний пароль' };
+        return { color: 'medium', text: 'Medium password' };
       case 3:
-        return { color: 'good', text: 'Хороший пароль' };
+        return { color: 'good', text: 'Good password' };
       case 4:
-        return { color: 'strong', text: 'Сильный пароль' };
+        return { color: 'strong', text: 'Strong password' };
       default:
-        return { color: 'weak', text: 'Слабый пароль' };
+        return { color: 'weak', text: 'Weak password' };
     }
   };
 
@@ -52,23 +52,23 @@ export const PasswordStrength: React.FC<PasswordStrengthProps> = ({
       </div>
 
       <div className="password-strength__requirements">
-        <small>Пароль должен содержать:</small>
+        <small>Password must contain:</small>
         <ul>
           <li className={/\d/.test(password) ? 'valid' : 'invalid'}>
-            ✓ Минимум 1 цифру
+            ✓ At least 1 digit
           </li>
           <li className={/[A-Z]/.test(password) ? 'valid' : 'invalid'}>
-            ✓ Минимум 1 заглавную букву
+            ✓ At least 1 uppercase letter
           </li>
           <li className={/[a-z]/.test(password) ? 'valid' : 'invalid'}>
-            ✓ Минимум 1 строчную букву
+            ✓ At least 1 lowercase letter
           </li>
           <li
             className={
               /[!@#$%^&*(),.?":{}|<>]/.test(password) ? 'valid' : 'invalid'
             }
           >
-            ✓ Минимум 1 специальный символ
+            ✓ At least 1 special character
           </li>
         </ul>
       </div>

@@ -41,7 +41,7 @@ export const MainPage: React.FC = () => {
   };
 
   const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat('ru-RU', {
+    return new Intl.DateTimeFormat('en-US', {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
@@ -71,8 +71,8 @@ export const MainPage: React.FC = () => {
 
         <div className="data-card__content">
           <div className="data-card__row">
-            <span className="data-card__label">Возраст:</span>
-            <span className="data-card__value">{data.age} лет</span>
+            <span className="data-card__label">Age:</span>
+            <span className="data-card__value">{data.age} years old</span>
           </div>
 
           <div className="data-card__row">
@@ -81,34 +81,34 @@ export const MainPage: React.FC = () => {
           </div>
 
           <div className="data-card__row">
-            <span className="data-card__label">Пол:</span>
+            <span className="data-card__label">Gender:</span>
             <span className="data-card__value">
               {data.gender === 'male'
-                ? 'Мужской'
+                ? 'Male'
                 : data.gender === 'female'
-                  ? 'Женский'
-                  : 'Другой'}
+                  ? 'Female'
+                  : 'Other'}
             </span>
           </div>
 
           <div className="data-card__row">
-            <span className="data-card__label">Страна:</span>
+            <span className="data-card__label">Country:</span>
             <span className="data-card__value">{data.country}</span>
           </div>
 
           {data.profilePicture && (
             <div className="data-card__row">
-              <span className="data-card__label">Фото:</span>
+              <span className="data-card__label">Photo:</span>
               <img
                 src={data.profilePicture}
-                alt="Профиль"
+                alt="Profile"
                 className="data-card__image"
               />
             </div>
           )}
 
           <div className="data-card__row">
-            <span className="data-card__label">Отправлено:</span>
+            <span className="data-card__label">Submitted:</span>
             <span className="data-card__value">
               {formatDate(data.submittedAt)}
             </span>
@@ -121,9 +121,9 @@ export const MainPage: React.FC = () => {
   return (
     <div className="main-page">
       <header className="main-page__header">
-        <h1 className="main-page__title">Приложение с формами и порталами</h1>
+        <h1 className="main-page__title">Forms and Portals Application</h1>
         <p className="main-page__description">
-          Демонстрация работы с uncontrolled формами и React Hook Form
+          Demonstration of uncontrolled forms and React Hook Form
         </p>
       </header>
 
@@ -132,26 +132,26 @@ export const MainPage: React.FC = () => {
           className="action-button action-button--uncontrolled"
           onClick={() => setIsUncontrolledModalOpen(true)}
         >
-          Открыть Uncontrolled форму
+          Open Uncontrolled Form
         </button>
 
         <button
           className="action-button action-button--react-hook-form"
           onClick={() => setIsReactHookFormModalOpen(true)}
         >
-          Открыть React Hook Form
+          Open React Hook Form
         </button>
       </section>
 
       <section className="main-page__data">
         <h2 className="main-page__data-title">
-          Отправленные данные ({submittedData.length})
+          Submitted Data ({submittedData.length})
         </h2>
 
         {submittedData.length === 0 ? (
           <div className="empty-state">
-            <p>Пока нет отправленных форм</p>
-            <p>Нажмите на одну из кнопок выше, чтобы заполнить форму</p>
+            <p>No submitted forms yet</p>
+            <p>Click one of the buttons above to fill out a form</p>
           </div>
         ) : (
           <div className="data-grid">
@@ -169,7 +169,7 @@ export const MainPage: React.FC = () => {
       <Modal
         isOpen={isUncontrolledModalOpen}
         onClose={() => setIsUncontrolledModalOpen(false)}
-        title="Uncontrolled форма"
+        title="Uncontrolled Form"
       >
         <UncontrolledForm onSuccess={handleUncontrolledFormSuccess} />
       </Modal>
