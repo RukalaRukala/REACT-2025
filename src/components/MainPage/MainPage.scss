@@ -1,0 +1,250 @@
+.main-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.main-page__header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.main-page__title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.main-page__description {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.main-page__actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 220px;
+
+  &--uncontrolled {
+    background-color: #2196f3;
+    color: white;
+
+    &:hover {
+      background-color: #1976d2;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+  }
+
+  &--react-hook-form {
+    background-color: #ff9800;
+    color: white;
+
+    &:hover {
+      background-color: #f57c00;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.main-page__data {
+  margin-top: 40px;
+}
+
+.main-page__data-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+
+  p {
+    margin: 8px 0;
+
+    &:first-child {
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}
+
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.data-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  &--highlighted {
+    border-color: #4caf50;
+    background: linear-gradient(135deg, #f8fff8 0%, #ffffff 100%);
+    animation: highlight 3s ease-out;
+  }
+}
+
+.data-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.data-card__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  flex: 1;
+}
+
+.data-card__badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+
+  &--uncontrolled {
+    background-color: #e3f2fd;
+    color: #1976d2;
+  }
+
+  &--react-hook-form {
+    background-color: #fff3e0;
+    color: #f57c00;
+  }
+}
+
+.data-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.data-card__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+
+  &:has(.data-card__image) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.data-card__label {
+  font-weight: 600;
+  color: #666;
+  min-width: 80px;
+  font-size: 14px;
+}
+
+.data-card__value {
+  color: #333;
+  text-align: right;
+  flex: 1;
+  word-break: break-word;
+  font-size: 14px;
+}
+
+.data-card__image {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+  margin-top: 4px;
+}
+
+@keyframes highlight {
+  0% {
+    border-color: #4caf50;
+    background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+    transform: scale(1.02);
+  }
+  50% {
+    border-color: #4caf50;
+    background: linear-gradient(135deg, #f0fff0 0%, #ffffff 100%);
+  }
+  100% {
+    border-color: #e0e0e0;
+    background: white;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-page {
+    padding: 20px 16px;
+  }
+
+  .main-page__title {
+    font-size: 24px;
+  }
+
+  .main-page__actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-button {
+    min-width: 280px;
+  }
+
+  .data-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .data-card__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .data-card__value {
+    text-align: left;
+  }
+}
