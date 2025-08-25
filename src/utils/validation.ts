@@ -33,7 +33,10 @@ export const validateEmail = (email: string): boolean => {
 };
 
 export const validatePassword = (password: string): boolean => {
-  return password.length >= 8 && getPasswordStrength(password) === 4;
+  if (password.length < 8) return false;
+
+  const strength = getPasswordStrength(password);
+  return strength >= 3;
 };
 
 export const formValidationSchema: yup.ObjectSchema<UserFormData> = yup.object({
