@@ -15,6 +15,27 @@ const getPasswordStrength = (password: string): number => {
   return strength;
 };
 
+export const validateEmail = (email: string): boolean => {
+  if (!email || email.trim() === '') return false;
+
+  const emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
+  if (!emailRegex.test(email)) return false;
+
+  if (email.includes('..')) return false;
+  if (email.startsWith('.') || email.endsWith('.')) return false;
+  if (email.startsWith('@') || email.endsWith('@')) return false;
+
+  const parts = email.split('@');
+  if (parts.length !== 2) return false;
+  return !(parts[0].length === 0 || parts[1].length === 0);
+};
+
+export const validatePassword = (password: string): boolean => {
+  return password.length >= 8 && getPasswordStrength(password) === 4;
+};
+
 export const formValidationSchema: yup.ObjectSchema<UserFormData> = yup.object({
   name: yup
     .string()
