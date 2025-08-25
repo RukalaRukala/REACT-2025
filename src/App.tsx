@@ -1,17 +1,12 @@
-import { Component } from 'react';
+import { MainPage } from './components/MainPage/MainPage';
+import './App.scss';
 
-class App extends Component<Record<string, never>, { name: string }> {
-  constructor(props: Record<string, never>) {
-    super(props);
-
-    this.state = {
-      name: 'Hello',
-    };
-  }
-
-  render() {
-    return <div className="app">{this.state.name}</div>;
-  }
+function App() {
+  return (
+    <div className="App">
+      <MainPage />
+    </div>
+  );
 }
 
 export default App;
